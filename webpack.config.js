@@ -14,7 +14,7 @@ module.exports = function (env) {
       styles: './src/styles/main.scss'
     },
     output: {
-      path: path.resolve(__dirname, 'build'),
+      path: path.resolve(__dirname, 'docs'),
       publicPath: '',
       filename: 'js/[name].js?[chunkhash:8]'
     },
