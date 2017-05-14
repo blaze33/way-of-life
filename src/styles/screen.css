@@ -1,0 +1,113 @@
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+html {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+    width: 100%
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    margin: 0;
+    font-family: "Alegreya", Palatino, Georgia, serif;
+    color: #444
+}
+
+a, a:visited {
+    color: #444;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #000
+}
+
+.content {
+    padding: 0.809em;
+    max-width: 30em;
+    margin: auto
+}
+
+.content>footer {
+    margin-top: 4em;
+    margin-bottom: 2em;
+    border-top: 1px solid #eee;
+    display: none
+}
+
+article>h1:first-child {
+    display: none
+}
+
+article h1,
+article h2,
+article h3,
+article h4,
+article h5 {
+    font-weight: normal;
+    margin-top: 2em;
+    color: black
+}
+
+article h1,
+article h2 {
+    font-size: 1.5em
+}
+
+article h3 {
+    font-family: "Alegreya SC", Palatino, Georgia, serif;
+    font-weight: normal;
+    text-transform: lowercase
+}
+
+article h4 {
+    font-size: 1em;
+    font-style: italic
+}
+
+article h5 {
+    font-style: normal
+}
+
+article ul,
+article ol {
+    list-style-position: outside;
+    padding: 0
+}
+
+article blockquote {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 1px solid #aaa
+}
+
+article img,
+article object,
+article video,
+article audio,
+article figure,
+article iframe {
+    max-width: 100%
+}
+
+@media all and (min-width: 33.236em) {
+    .content {
+        padding: 1.618em;
+        margin: 0 auto;
+        max-width: 45rem;
+        font-size: 1.25em
+    }
+}
+
+@media all and (min-width: 33.236em) and screen and (min-width: 30em) and (max-width: 63.236em) {
+    .content {
+        width: 30em
+    }
+}
