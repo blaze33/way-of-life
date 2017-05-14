@@ -14,11 +14,11 @@ current[151][215] = 1
 
 const canvas = document.getElementById('worldmap')
 const context = canvas.getContext('2d')
+
 const info = document.getElementById('info')
 var time = 0
-var then = Date.now()
 var fps = 0
-var neighbors = 0
+var frameNumber = 0
 
 function cell (i, j) {
   if (i === -1) {
@@ -35,6 +35,8 @@ function cell (i, j) {
 }
 
 function computeNextStep () {
+  var neighbors
+
   for (var i = 0; i < height; i++) {
     for (var j = 0; j < width; j++) {
       neighbors = cell(i - 1, j - 1) + cell(i - 1, j) + cell(i - 1, j + 1)
@@ -68,14 +70,14 @@ function draw (timeStamp) {
   }
 
   // Update FPS display every half second
-  const now = Date.now()
   const elapsed = timeStamp - time
-  if ((now - then) > 500) {
-    fps = 1000 / elapsed
+  frameNumber += 1
+  if (elapsed > 500) {
+    fps = 1000 / elapsed * frameNumber
     fpsNode.nodeValue = `${fps.toFixed(2)} FPS`
-    then = now
+    time = timeStamp
+    frameNumber = 0
   }
-  time = timeStamp
 
   window.requestAnimationFrame(draw)
 };
