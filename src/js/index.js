@@ -1,19 +1,22 @@
-const width = 400
-const height = 300
-
-var current = Array(height).fill(0).map(x => Array(width).fill(0))
-var next = Array(height).fill(0).map(x => Array(width).fill(0))
-
-current[149][210] = 1
-current[150][212] = 1
-current[151][209] = 1
-current[151][210] = 1
-current[151][213] = 1
-current[151][214] = 1
-current[151][215] = 1
+'use strict'
 
 const canvas = document.getElementById('worldmap')
 const context = canvas.getContext('2d')
+const width = canvas.width / 2
+const height = canvas.height / 2
+
+var buffer = new ArrayBuffer(width * height)
+var current = new Uint8Array(buffer)
+var nextBuffer = new ArrayBuffer(width * height)
+var next = new Uint8Array(nextBuffer)
+
+current[149 * width + 210] = 1
+current[150 * width + 212] = 1
+current[151 * width + 209] = 1
+current[151 * width + 210] = 1
+current[151 * width + 213] = 1
+current[151 * width + 214] = 1
+current[151 * width + 215] = 1
 
 const info = document.getElementById('info')
 var time = 0
@@ -31,7 +34,7 @@ function cell (i, j) {
   } else if (j === width) {
     j = 0
   }
-  return current[i][j]
+  return current[i * width + j]
 }
 
 function computeNextStep () {
@@ -42,32 +45,33 @@ function computeNextStep () {
       neighbors = cell(i - 1, j - 1) + cell(i - 1, j) + cell(i - 1, j + 1)
       neighbors += cell(i, j - 1) + cell(i, j + 1)
       neighbors += cell(i + 1, j - 1) + cell(i + 1, j) + cell(i + 1, j + 1)
-      if (current[i][j] === 0 && neighbors === 3) {
-        next[i][j] = 1
-      } else if (current[i][j] === 1 && (neighbors === 2 || neighbors === 3)) {
-        next[i][j] = 1
+      if (current[i * width + j] === 0 && neighbors === 3) {
+        next[i * width + j] = 1
+      } else if (current[i * width + j] === 1 && (neighbors === 2 || neighbors === 3)) {
+        next[i * width + j] = 1
       } else {
-        next[i][j] = 0
+        next[i * width + j] = 0
       }
     }
   }
 };
 
 function draw (timeStamp) {
+  window.requestAnimationFrame(draw)
+
   context.fillStyle = 'rgb(240,240,240)'
   context.fillRect(0, 0, 2 * width, 2 * height)
+
   context.fillStyle = 'rgb(40,40,40)'
-  current.forEach(function (row, i) {
-    row.forEach(function (value, j) {
-      if (value === 1) {
+  for (var i = 0; i < height; i++) {
+    for (var j = 0; j < width; j++) {
+      if (current[i * width + j] === 1) {
         context.fillRect(2 * j, 2 * i, 2, 2)
       }
-    })
-  })
-  computeNextStep()
-  for (var i = 0; i < height; i++) {
-    current[i] = next[i].slice(0)
+    }
   }
+  computeNextStep()
+  current.set(next)
 
   // Update FPS display every half second
   const elapsed = timeStamp - time
@@ -78,8 +82,6 @@ function draw (timeStamp) {
     time = timeStamp
     frameNumber = 0
   }
-
-  window.requestAnimationFrame(draw)
 };
 
 const fpsNode = document.createTextNode('')
