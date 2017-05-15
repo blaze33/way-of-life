@@ -18,6 +18,36 @@ current[151 * width + 213] = 1
 current[151 * width + 214] = 1
 current[151 * width + 215] = 1
 
+var mouseDown = false;
+function mouseIsDown (event) {
+  if (event.button === 0) {
+    mouseDown = true
+  }
+}
+function mouseIsUp(event) {
+  mouseDown = false
+}
+document.body.onmousedown = mouseIsDown
+document.body.onmouseup = mouseIsUp
+function moveEvent (event) {
+  const rect = canvas.getBoundingClientRect();
+  const mousePos = {
+    x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
+    y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+  }
+  const pos = {
+    i: ~~(mousePos.y / 2),
+    j: ~~(mousePos.x / 2)
+  }
+  posNode.nodeValue = ` - i: ${pos.i}, j: ${pos.j}`
+  if (mouseDown) {
+    current[pos.i * width + pos.j] = 1
+    current[(pos.i + 1) * width + pos.j] = 1
+    current[pos.i * width + pos.j + 1] = 1
+  }
+}
+canvas.addEventListener('mousemove', moveEvent, false);
+
 const info = document.getElementById('info')
 var time = 0
 var fps = 0
@@ -85,5 +115,7 @@ function draw (timeStamp) {
 };
 
 const fpsNode = document.createTextNode('')
+const posNode = document.createTextNode('')
 info.appendChild(fpsNode)
+info.appendChild(posNode)
 window.requestAnimationFrame(draw)
