@@ -109,7 +109,7 @@ function mouseIsUp(event) {
 }
 document.body.onmousedown = mouseIsDown;
 document.body.onmouseup = mouseIsUp;
-function moveEvent(event) {
+function moveEvent(event, touch = false) {
   const rect = canvas.getBoundingClientRect();
   const mousePos = {
     x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.clientWidth,
@@ -120,7 +120,7 @@ function moveEvent(event) {
     j: ~~(mousePos.x / pixelsPerCell)
   };
   posNode.nodeValue = ` - i: ${pos.i}, j: ${pos.j}`;
-  if (mouseDown) {
+  if (mouseDown || touch) {
     next[pos.i * width + pos.j] = 1;
     next[(pos.i - 1) * width + pos.j] = 1;
     next[(pos.i + 1) * width + pos.j] = 1;
@@ -128,7 +128,12 @@ function moveEvent(event) {
     next[pos.i * width + pos.j - 1] = 1;
   }
 }
-canvas.addEventListener('mousemove', moveEvent, false);
+canvas.addEventListener('mousemove', moveEvent);
+canvas.addEventListener('touchmove', function (event) {
+  for (var i = 0; i < event.touches.length; i++) {
+    moveEvent(event.touches[i], true);
+  }
+});
 
 function cell(i, j) {
   if (i === -1) {
