@@ -79,12 +79,12 @@ function computeNextStep () {
       neighbors = cell(i - 1, j - 1) + cell(i - 1, j) + cell(i - 1, j + 1)
       neighbors += cell(i, j - 1) + cell(i, j + 1)
       neighbors += cell(i + 1, j - 1) + cell(i + 1, j) + cell(i + 1, j + 1)
-      if (current[i * width + j] === 0 && neighbors === 3) {
-        next[i * width + j] = 1
-      } else if (current[i * width + j] === 1 && (neighbors === 2 || neighbors === 3)) {
+      if (neighbors < 2 || neighbors > 3) {
+        next[i * width + j] = 0
+      } else if (neighbors === 3) {
         next[i * width + j] = 1
       } else {
-        next[i * width + j] = 0
+        next[i * width + j] = current[i * width + j]
       }
     }
   }
