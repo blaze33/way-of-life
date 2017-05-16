@@ -73,14 +73,14 @@
 "use strict";
 
 
-const canvas = document.getElementById('worldmap');
-const context = canvas.getContext('2d');
+var canvas = document.getElementById('worldmap');
+var context = canvas.getContext('2d');
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.clientHeight;
 
-const pixelsPerCell = 5;
-const width = ~~(canvas.clientWidth / pixelsPerCell);
-const height = ~~(canvas.clientHeight / pixelsPerCell);
+var pixelsPerCell = 5;
+var width = ~~(canvas.clientWidth / pixelsPerCell);
+var height = ~~(canvas.clientHeight / pixelsPerCell);
 
 var buffer = new ArrayBuffer(width * height);
 var current = new Uint8Array(buffer);
@@ -109,17 +109,19 @@ function mouseIsUp(event) {
 }
 document.body.onmousedown = mouseIsDown;
 document.body.onmouseup = mouseIsUp;
-function moveEvent(event, touch = false) {
-  const rect = canvas.getBoundingClientRect();
-  const mousePos = {
+function moveEvent(event) {
+  var touch = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+
+  var rect = canvas.getBoundingClientRect();
+  var mousePos = {
     x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.clientWidth,
     y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.clientHeight
   };
-  const pos = {
+  var pos = {
     i: ~~(mousePos.y / pixelsPerCell),
     j: ~~(mousePos.x / pixelsPerCell)
   };
-  posNode.nodeValue = ` - i: ${pos.i}, j: ${pos.j}`;
+  posNode.nodeValue = ' - i: ' + pos.i + ', j: ' + pos.j;
   if (mouseDown || touch) {
     next[pos.i * width + pos.j] = 1;
     next[(pos.i - 1) * width + pos.j] = 1;
@@ -168,7 +170,7 @@ function computeNextStep() {
   }
 };
 
-const info = document.getElementById('info');
+var info = document.getElementById('info');
 var fpsTime = 0;
 var cellTime = 0;
 var fps = 0;
@@ -177,7 +179,7 @@ var frameNumber = 0;
 function draw(timeStamp) {
   window.requestAnimationFrame(draw);
 
-  const cellElapsed = timeStamp - cellTime;
+  var cellElapsed = timeStamp - cellTime;
   if (cellElapsed > 1000 / desiredFPS) {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -199,17 +201,17 @@ function draw(timeStamp) {
   }
 
   // Update FPS display every half second
-  const fpsElapsed = timeStamp - fpsTime;
+  var fpsElapsed = timeStamp - fpsTime;
   if (fpsElapsed > 500) {
     fps = 1000 / fpsElapsed * frameNumber;
-    fpsNode.nodeValue = `${fps.toFixed(2)} FPS`;
+    fpsNode.nodeValue = fps.toFixed(2) + ' FPS';
     fpsTime = timeStamp;
     frameNumber = 0;
   }
 };
 
-const fpsNode = document.createTextNode('');
-const posNode = document.createTextNode('');
+var fpsNode = document.createTextNode('');
+var posNode = document.createTextNode('');
 info.appendChild(fpsNode);
 info.appendChild(posNode);
 computeNextStep();
