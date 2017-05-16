@@ -46,7 +46,6 @@ function moveEvent (event, touch=false) {
     i: ~~(mousePos.y / pixelsPerCell),
     j: ~~(mousePos.x / pixelsPerCell)
   }
-  posNode.nodeValue = ` - i: ${pos.i}, j: ${pos.j}`
   if (mouseDown || touch) {
     next[pos.i * width + pos.j] = 1
     next[(pos.i - 1) * width + pos.j] = 1
@@ -136,8 +135,6 @@ function draw (timeStamp) {
 };
 
 const fpsNode = document.createTextNode('')
-const posNode = document.createTextNode('')
 info.appendChild(fpsNode)
-info.appendChild(posNode)
 computeNextStep()
 window.requestAnimationFrame(draw)

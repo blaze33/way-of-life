@@ -121,7 +121,6 @@ function moveEvent(event) {
     i: ~~(mousePos.y / pixelsPerCell),
     j: ~~(mousePos.x / pixelsPerCell)
   };
-  posNode.nodeValue = ' - i: ' + pos.i + ', j: ' + pos.j;
   if (mouseDown || touch) {
     next[pos.i * width + pos.j] = 1;
     next[(pos.i - 1) * width + pos.j] = 1;
@@ -211,9 +210,7 @@ function draw(timeStamp) {
 };
 
 var fpsNode = document.createTextNode('');
-var posNode = document.createTextNode('');
 info.appendChild(fpsNode);
-info.appendChild(posNode);
 computeNextStep();
 window.requestAnimationFrame(draw);
 
