@@ -75,21 +75,28 @@
 
 const canvas = document.getElementById('worldmap');
 const context = canvas.getContext('2d');
-const width = canvas.width / 2;
-const height = canvas.height / 2;
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.clientHeight;
+
+const pixelsPerCell = 5;
+const width = ~~(canvas.clientWidth / pixelsPerCell);
+const height = ~~(canvas.clientHeight / pixelsPerCell);
 
 var buffer = new ArrayBuffer(width * height);
 var current = new Uint8Array(buffer);
 var nextBuffer = new ArrayBuffer(width * height);
 var next = new Uint8Array(nextBuffer);
 
-current[149 * width + 210] = 1;
-current[150 * width + 212] = 1;
-current[151 * width + 209] = 1;
-current[151 * width + 210] = 1;
-current[151 * width + 213] = 1;
-current[151 * width + 214] = 1;
-current[151 * width + 215] = 1;
+// starting position at the center, hence divide by 2
+var i = ~~(height / 2);
+var j = ~~(width / 2);
+current[(i - 1) * width + j] = 1;
+current[i * width + j + 2] = 1;
+current[(i + 1) * width + j - 1] = 1;
+current[(i + 1) * width + j] = 1;
+current[(i + 1) * width + j + 3] = 1;
+current[(i + 1) * width + j + 4] = 1;
+current[(i + 1) * width + j + 5] = 1;
 
 var mouseDown = false;
 function mouseIsDown(event) {
@@ -105,26 +112,23 @@ document.body.onmouseup = mouseIsUp;
 function moveEvent(event) {
   const rect = canvas.getBoundingClientRect();
   const mousePos = {
-    x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.width,
-    y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
+    x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.clientWidth,
+    y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.clientHeight
   };
   const pos = {
-    i: ~~(mousePos.y / 2),
-    j: ~~(mousePos.x / 2)
+    i: ~~(mousePos.y / pixelsPerCell),
+    j: ~~(mousePos.x / pixelsPerCell)
   };
   posNode.nodeValue = ` - i: ${pos.i}, j: ${pos.j}`;
   if (mouseDown) {
-    current[pos.i * width + pos.j] = 1;
-    current[(pos.i + 1) * width + pos.j] = 1;
-    current[pos.i * width + pos.j + 1] = 1;
+    next[pos.i * width + pos.j] = 1;
+    next[(pos.i - 1) * width + pos.j] = 1;
+    next[(pos.i + 1) * width + pos.j] = 1;
+    next[pos.i * width + pos.j + 1] = 1;
+    next[pos.i * width + pos.j - 1] = 1;
   }
 }
 canvas.addEventListener('mousemove', moveEvent, false);
-
-const info = document.getElementById('info');
-var time = 0;
-var fps = 0;
-var frameNumber = 0;
 
 function cell(i, j) {
   if (i === -1) {
@@ -148,41 +152,53 @@ function computeNextStep() {
       neighbors = cell(i - 1, j - 1) + cell(i - 1, j) + cell(i - 1, j + 1);
       neighbors += cell(i, j - 1) + cell(i, j + 1);
       neighbors += cell(i + 1, j - 1) + cell(i + 1, j) + cell(i + 1, j + 1);
-      if (current[i * width + j] === 0 && neighbors === 3) {
-        next[i * width + j] = 1;
-      } else if (current[i * width + j] === 1 && (neighbors === 2 || neighbors === 3)) {
+      if (neighbors < 2 || neighbors > 3) {
+        next[i * width + j] = 0;
+      } else if (neighbors === 3) {
         next[i * width + j] = 1;
       } else {
-        next[i * width + j] = 0;
+        next[i * width + j] = current[i * width + j];
       }
     }
   }
 };
 
+const info = document.getElementById('info');
+var fpsTime = 0;
+var cellTime = 0;
+var fps = 0;
+var desiredFPS = 30;
+var frameNumber = 0;
 function draw(timeStamp) {
   window.requestAnimationFrame(draw);
 
-  context.fillStyle = 'rgb(240,240,240)';
-  context.fillRect(0, 0, 2 * width, 2 * height);
+  const cellElapsed = timeStamp - cellTime;
+  if (cellElapsed > 1000 / desiredFPS) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
-  context.fillStyle = 'rgb(40,40,40)';
-  for (var i = 0; i < height; i++) {
-    for (var j = 0; j < width; j++) {
-      if (current[i * width + j] === 1) {
-        context.fillRect(2 * j, 2 * i, 2, 2);
+    current.set(next);
+
+    context.strokeStyle = 'rgba(255,118,5,0.5)';
+    context.fillStyle = 'rgba(222,122,39,0.5)';
+    for (var i = 0; i < height; i++) {
+      for (var j = 0; j < width; j++) {
+        if (current[i * width + j] === 1) {
+          context.strokeRect(pixelsPerCell * j, pixelsPerCell * i, pixelsPerCell, pixelsPerCell);
+          context.fillRect(pixelsPerCell * j, pixelsPerCell * i, pixelsPerCell, pixelsPerCell);
+        }
       }
     }
+    computeNextStep();
+    frameNumber += 1;
+    cellTime = timeStamp - cellElapsed % (1000 / desiredFPS);
   }
-  computeNextStep();
-  current.set(next);
 
   // Update FPS display every half second
-  const elapsed = timeStamp - time;
-  frameNumber += 1;
-  if (elapsed > 500) {
-    fps = 1000 / elapsed * frameNumber;
+  const fpsElapsed = timeStamp - fpsTime;
+  if (fpsElapsed > 500) {
+    fps = 1000 / fpsElapsed * frameNumber;
     fpsNode.nodeValue = `${fps.toFixed(2)} FPS`;
-    time = timeStamp;
+    fpsTime = timeStamp;
     frameNumber = 0;
   }
 };
@@ -191,6 +207,7 @@ const fpsNode = document.createTextNode('');
 const posNode = document.createTextNode('');
 info.appendChild(fpsNode);
 info.appendChild(posNode);
+computeNextStep();
 window.requestAnimationFrame(draw);
 
 /***/ })
