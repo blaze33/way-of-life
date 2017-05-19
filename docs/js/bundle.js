@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -89,14 +89,14 @@ var Engine = function () {
     this.height = height;
 
     var buffer = new ArrayBuffer(width * height);
-    this.current = new Uint8Array(buffer);
+    this._current = new Uint8Array(buffer);
     var nextBuffer = new ArrayBuffer(width * height);
-    this.next = new Uint8Array(nextBuffer);
+    this._next = new Uint8Array(nextBuffer);
   }
 
   _createClass(Engine, [{
-    key: "cell",
-    value: function cell(i, j) {
+    key: "index",
+    value: function index(i, j) {
       if (i === -1) {
         i = this.height - 1;
       } else if (i === this.height) {
@@ -107,7 +107,17 @@ var Engine = function () {
       } else if (j === this.width) {
         j = 0;
       }
-      return this.current[i * this.width + j];
+      return i * this.width + j;
+    }
+  }, {
+    key: "cell",
+    value: function cell(i, j) {
+      return this._current[this.index(i, j)];
+    }
+  }, {
+    key: "next",
+    value: function next(i, j) {
+      return this._next[this.index(i, j)];
     }
   }, {
     key: "computeNextState",
@@ -119,29 +129,29 @@ var Engine = function () {
           neighbors += this.cell(i, j - 1) /* this.cell(i, j) */ + this.cell(i, j + 1);
           neighbors += this.cell(i + 1, j - 1) + this.cell(i + 1, j) + this.cell(i + 1, j + 1);
           if (neighbors < 2 || neighbors > 3) {
-            this.next[i * this.width + j] = 0;
+            this._next[i * this.width + j] = 0;
           } else if (neighbors === 3) {
-            this.next[i * this.width + j] = 1;
+            this._next[i * this.width + j] = 1;
           } else {
-            this.next[i * this.width + j] = this.current[i * this.width + j];
+            this._next[i * this.width + j] = this._current[i * this.width + j];
           }
         }
       }
-      this.current.set(this.next);
+      this._current.set(this._next);
     }
   }, {
-    key: "setCurrent",
-    value: function setCurrent(i, j) {
+    key: "set",
+    value: function set(i, j) {
       var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
-      this.current[i * this.width + j] = value;
+      this._current[this.index(i, j)] = value;
     }
   }, {
     key: "setNext",
     value: function setNext(i, j) {
       var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
 
-      this.next[i * this.width + j] = value;
+      this._next[this.index(i, j)] = value;
     }
   }]);
 
@@ -161,42 +171,33 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 function acorn(engine, i, j) {
-  var next = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  var setMethod = next ? engine.setNext.bind(engine) : engine.setCurrent.bind(engine);
-  setMethod(i - 1, j);
-  setMethod(i, j + 2);
-  setMethod(i + 1, j - 1);
-  setMethod(i + 1, j);
-  setMethod(i + 1, j + 3);
-  setMethod(i + 1, j + 4);
-  setMethod(i + 1, j + 5);
+  engine.set(i - 1, j);
+  engine.set(i, j + 2);
+  engine.set(i + 1, j - 1);
+  engine.set(i + 1, j);
+  engine.set(i + 1, j + 3);
+  engine.set(i + 1, j + 4);
+  engine.set(i + 1, j + 5);
 }
 
 function cross(engine, i, j) {
-  var next = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  var setMethod = next ? engine.setNext.bind(engine) : engine.setCurrent.bind(engine);
-  setMethod(i - 1, j);
-  setMethod(i, j - 1);
-  setMethod(i, j);
-  setMethod(i, j + 1);
-  setMethod(i + 1, j);
+  engine.set(i - 1, j);
+  engine.set(i, j - 1);
+  engine.set(i, j);
+  engine.set(i, j + 1);
+  engine.set(i + 1, j);
 }
 
 function erase(engine, i, j) {
-  var next = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-
-  var setMethod = next ? engine.setNext.bind(engine) : engine.setCurrent.bind(engine);
-  setMethod(i - 1, j - 1, 0);
-  setMethod(i - 1, j, 0);
-  setMethod(i - 1, j + 1, 0);
-  setMethod(i, j - 1, 0);
-  setMethod(i, j, 0);
-  setMethod(i, j + 1, 0);
-  setMethod(i + 1, j - 1, 0);
-  setMethod(i + 1, j, 0);
-  setMethod(i + 1, j + 1, 0);
+  engine.set(i - 1, j - 1, 0);
+  engine.set(i - 1, j, 0);
+  engine.set(i - 1, j + 1, 0);
+  engine.set(i, j - 1, 0);
+  engine.set(i, j, 0);
+  engine.set(i, j + 1, 0);
+  engine.set(i + 1, j - 1, 0);
+  engine.set(i + 1, j, 0);
+  engine.set(i + 1, j + 1, 0);
 }
 
 exports.acorn = acorn;
@@ -210,28 +211,134 @@ exports.erase = erase;
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Renderer = function () {
+  function Renderer(canvas, engine) {
+    var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    _classCallCheck(this, Renderer);
+
+    this.canvas = canvas;
+    this.context = canvas.getContext('2d');
+    this.engine = engine;
+
+    // options
+    this.pixelsPerCell = options.pixelsPerCell || 5;
+    this.desiredFPS = options.desiredFPS || 30;
+    this.fpsNode = options.fpsNode || false;
+
+    // renderer variables
+    this.play = false;
+    this.fpsTime = 0;
+    this.engineTime = 0;
+    this.fps = 0;
+    this.frameNumber = 0;
+
+    // setup canvas with correct size
+    this.canvas.width = this.engine.width * this.pixelsPerCell;
+    this.canvas.height = this.engine.height * this.pixelsPerCell;
+  }
+
+  _createClass(Renderer, [{
+    key: 'togglePlay',
+    value: function togglePlay() {
+      this.play = !this.play;
+    }
+  }, {
+    key: 'draw',
+    value: function draw(timeStamp) {
+      window.requestAnimationFrame(this.draw.bind(this));
+
+      // display engine state on each frame
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.strokeStyle = 'rgba(255,118,5,0.5)';
+      this.context.fillStyle = 'rgba(222,122,39,0.5)';
+      for (var i = 0; i < this.engine.height; i++) {
+        for (var j = 0; j < this.engine.width; j++) {
+          if (this.engine.cell(i, j)) {
+            this.context.strokeRect(this.pixelsPerCell * j, this.pixelsPerCell * i, this.pixelsPerCell, this.pixelsPerCell);
+            this.context.fillRect(this.pixelsPerCell * j, this.pixelsPerCell * i, this.pixelsPerCell, this.pixelsPerCell);
+          }
+        }
+      }
+
+      // compute engine next step with appropriate frequency
+      var engineElapsed = timeStamp - this.engineTime;
+      if (engineElapsed > 1000 / this.desiredFPS && this.play) {
+        this.engine.computeNextState();
+        this.frameNumber += 1;
+        this.engineTime = timeStamp - engineElapsed % (1000 / this.desiredFPS);
+      }
+
+      // Update FPS display every half second
+      if (this.fpsNode) {
+        var fpsElapsed = timeStamp - this.fpsTime;
+        if (fpsElapsed > 500) {
+          this.fps = 1000 / fpsElapsed * this.frameNumber;
+          this.fpsNode.textContent = this.fps.toFixed(2) + ' FPS';
+          this.fpsTime = timeStamp;
+          this.frameNumber = 0;
+        }
+      }
+    }
+  }, {
+    key: 'start',
+    value: function start() {
+      this.engine.computeNextState();
+      this.play = true;
+      window.requestAnimationFrame(this.draw.bind(this));
+    }
+  }]);
+
+  return Renderer;
+}();
+
+exports.default = Renderer;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _engine = __webpack_require__(0);
 
 var _engine2 = _interopRequireDefault(_engine);
 
 var _patterns = __webpack_require__(1);
 
+var _renderer = __webpack_require__(2);
+
+var _renderer2 = _interopRequireDefault(_renderer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var canvas = document.getElementById('universe');
-var context = canvas.getContext('2d');
-canvas.width = canvas.clientWidth;
-canvas.height = canvas.clientHeight;
 
 var pixelsPerCell = 5;
 var width = ~~(canvas.clientWidth / pixelsPerCell);
 var height = ~~(canvas.clientHeight / pixelsPerCell);
-
 var engine = new _engine2.default(width, height);
+
+var renderer = new _renderer2.default(canvas, engine, {
+  desiredFPS: 30,
+  pixelsPerCell: pixelsPerCell,
+  fpsNode: document.getElementById('fps-info')
+});
 
 // starting position at the center, hence divide by 2
 (0, _patterns.acorn)(engine, ~~(height / 2), ~~(width / 2));
+(0, _patterns.acorn)(engine, 0, 0);
 
+// mouse events
 var mouseDown = false;
 function mouseIsDown(event) {
   if (event.button === 0) {
@@ -272,54 +379,9 @@ document.addEventListener('touchmove', function (event) {
   }
 });
 
-var info = document.getElementById('info');
-var fpsTime = 0;
-var cellTime = 0;
-var fps = 0;
-var desiredFPS = 30;
-var frameNumber = 0;
-var play = true;
-function draw(timeStamp) {
-  window.requestAnimationFrame(draw);
-
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.strokeStyle = 'rgba(255,118,5,0.5)';
-  context.fillStyle = 'rgba(222,122,39,0.5)';
-  for (var i = 0; i < height; i++) {
-    for (var j = 0; j < width; j++) {
-      if (engine.cell(i, j)) {
-        context.strokeRect(pixelsPerCell * j, pixelsPerCell * i, pixelsPerCell, pixelsPerCell);
-        context.fillRect(pixelsPerCell * j, pixelsPerCell * i, pixelsPerCell, pixelsPerCell);
-      }
-    }
-  }
-
-  var cellElapsed = timeStamp - cellTime;
-  if (cellElapsed > 1000 / desiredFPS && play) {
-    engine.computeNextState();
-
-    frameNumber += 1;
-    cellTime = timeStamp - cellElapsed % (1000 / desiredFPS);
-  }
-
-  // Update FPS display every half second
-  var fpsElapsed = timeStamp - fpsTime;
-  if (fpsElapsed > 500) {
-    fps = 1000 / fpsElapsed * frameNumber;
-    fpsNode.nodeValue = fps.toFixed(2) + ' FPS';
-    fpsTime = timeStamp;
-    frameNumber = 0;
-  }
-};
-
-var fpsNode = document.createTextNode('');
-info.appendChild(fpsNode);
-engine.computeNextState();
-window.requestAnimationFrame(draw);
-
+// control buttons eavents
 document.getElementById('ctrl-play-pause').addEventListener('click', function (event) {
-  play = !play;
-  engine.next.set(engine.current);
+  renderer.togglePlay();
 
   event.preventDefault();
   event.target.textContent = event.target.textContent === 'Pause' ? 'Play' : 'Pause';
@@ -331,6 +393,9 @@ document.getElementById('ctrl-hide-show').addEventListener('click', function (ev
   event.preventDefault();
   event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text';
 });
+
+// start
+renderer.start();
 
 /***/ })
 /******/ ]);
