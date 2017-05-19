@@ -4,12 +4,12 @@ class Engine {
     this.height = height
 
     const buffer = new ArrayBuffer(width * height)
-    this.current = new Uint8Array(buffer)
+    this._current = new Uint8Array(buffer)
     const nextBuffer = new ArrayBuffer(width * height)
-    this.next = new Uint8Array(nextBuffer)
+    this._next = new Uint8Array(nextBuffer)
   }
 
-  cell (i, j) {
+  index (i, j) {
     if (i === -1) {
       i = this.height - 1
     } else if (i === this.height) {
@@ -20,7 +20,15 @@ class Engine {
     } else if (j === this.width) {
       j = 0
     }
-    return this.current[i * this.width + j]
+    return i * this.width + j
+  }
+
+  cell (i, j) {
+    return this._current[this.index(i, j)]
+  }
+
+  next (i, j) {
+    return this._next[this.index(i, j)]
   }
 
   computeNextState () {
@@ -31,23 +39,23 @@ class Engine {
         neighbors += this.cell(i, j - 1) /* this.cell(i, j) */ + this.cell(i, j + 1)
         neighbors += this.cell(i + 1, j - 1) + this.cell(i + 1, j) + this.cell(i + 1, j + 1)
         if (neighbors < 2 || neighbors > 3) {
-          this.next[i * this.width + j] = 0
+          this._next[i * this.width + j] = 0
         } else if (neighbors === 3) {
-          this.next[i * this.width + j] = 1
+          this._next[i * this.width + j] = 1
         } else {
-          this.next[i * this.width + j] = this.current[i * this.width + j]
+          this._next[i * this.width + j] = this._current[i * this.width + j]
         }
       }
     }
-    this.current.set(this.next)
+    this._current.set(this._next)
   }
 
-  setCurrent (i, j, value = 1) {
-    this.current[i * this.width + j] = value
+  set (i, j, value = 1) {
+    this._current[this.index(i, j)] = value
   }
 
   setNext (i, j, value = 1) {
-    this.next[i * this.width + j] = value
+    this._next[this.index(i, j)] = value
   }
 }
 export {Engine as default}

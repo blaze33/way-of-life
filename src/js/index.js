@@ -19,7 +19,7 @@ const renderer = new Renderer(canvas, engine, {
 
 // starting position at the center, hence divide by 2
 acorn(engine, ~~(height / 2), ~~(width / 2))
-acorn(engine, 5, 5)
+acorn(engine, 0, 0)
 
 // mouse events
 var mouseDown = false
