@@ -16,13 +16,13 @@
         <li>An empty cell that has exactly 3 neighbors is "born" into in the next generation.</li>
         <li>An occupied cell that has exactly 2 or 3 neighbors survives to the next generation. Otherwise, its occupant dies (of loneliness or overcrowding).</li>
       </ol>
-      <p>There's is a one line implementation of this game in <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>:</p>
+      <p>There is a one line implementation of this game in <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>:</p>
       <p class="APL">
         <a href="https://dfns.dyalog.com/n_life.htm">
           life←{ ↑1 ⍵∨.∧3 4=+/,¯1 0 1∘.⊖¯1 0 1∘.⌽⊂⍵ }
         </a>
       </p>
-      <p>What you are seeing is a javascript implementation of conway's game of life using an HTML canvas to draw it.</p>
+      <p>What you are seeing is a more naïve javascript implementation of conway's game of life using an HTML canvas to draw it.</p>
       <p><strong>Click or touch the screen to add new cells.</strong></p>
       <p>This implementation features a universe that is a torus, ie. screen borders are connected and a cell that goes through the right border will reappear on the left one.</p>
       <p class="github-link"><a href="https://github.com/blaze33/game-of-life">
@@ -32,8 +32,10 @@
     </section>
     <section class="content controls">
       <button class="btn--raised btn--primary" id="ctrl-play-pause">Pause</button>
-      <span id="info"></span>
+      <span id="fps-info"></span>
       <button class="btn--raised btn--secondary" id="ctrl-hide-show">Hide text</button>
+      <br>
+      <small>Made with ☮ by <a href="http://www.openbloc.fr">Maxime R.</a></small>
     </section>
   </div>
   <a href="https://github.com/blaze33/game-of-life" class="github-corner" aria-label="View source on Github">

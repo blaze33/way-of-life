@@ -67,7 +67,15 @@ $accent: #ff5722;
     }
 }
 
-#info {
+#fps-info {
     min-width: 10rem;
     display: inline-block;
+}
+
+.text-content {
+    margin-bottom: 5rem;
+}
+
+small {
+    font-size: 0.9rem;
 }

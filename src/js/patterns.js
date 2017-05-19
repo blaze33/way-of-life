@@ -20,7 +20,7 @@ function cross (engine, i, j, next = false) {
 
 function erase (engine, i, j, next = false) {
   const setMethod = next ? engine.setNext.bind(engine) : engine.setCurrent.bind(engine)
-  setMethod(i - 1   , j - 1, 0)
+  setMethod(i - 1, j - 1, 0)
   setMethod(i - 1, j, 0)
   setMethod(i - 1, j + 1, 0)
   setMethod(i, j - 1, 0)
