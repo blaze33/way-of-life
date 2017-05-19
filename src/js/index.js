@@ -5,7 +5,7 @@ import {acorn, cross, erase} from './patterns'
 
 const canvas = document.getElementById('universe')
 const context = canvas.getContext('2d')
-canvas.width  = canvas.clientWidth
+canvas.width = canvas.clientWidth
 canvas.height = canvas.clientHeight
 
 const pixelsPerCell = 5
@@ -17,20 +17,20 @@ const engine = new Engine(width, height)
 // starting position at the center, hence divide by 2
 acorn(engine, ~~(height / 2), ~~(width / 2))
 
-var mouseDown = false;
+var mouseDown = false
 function mouseIsDown (event) {
   if (event.button === 0) {
     mouseDown = true
     addCells(event)
   }
 }
-function mouseIsUp(event) {
+function mouseIsUp (event) {
   mouseDown = false
 }
 document.body.onmousedown = mouseIsDown
 document.body.onmouseup = mouseIsUp
-function addCells (event, touch=false) {
-  const rect = canvas.getBoundingClientRect();
+function addCells (event, touch = false) {
+  const rect = canvas.getBoundingClientRect()
   const mousePos = {
     x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.clientWidth,
     y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.clientHeight
@@ -48,9 +48,9 @@ function addCells (event, touch=false) {
   }
 }
 
-document.addEventListener('mousemove', addCells);
-document.addEventListener('touchmove', function (event){
-  for (let i=0; i < event.touches.length; i++) {
+document.addEventListener('mousemove', addCells)
+document.addEventListener('touchmove', function (event) {
+  for (let i = 0; i < event.touches.length; i++) {
     addCells(event.touches[i], true)
   }
 })
@@ -65,7 +65,7 @@ var play = true
 function draw (timeStamp) {
   window.requestAnimationFrame(draw)
 
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height)
   context.strokeStyle = 'rgba(255,118,5,0.5)'
   context.fillStyle = 'rgba(222,122,39,0.5)'
   for (let i = 0; i < height; i++) {
@@ -101,7 +101,7 @@ engine.computeNextState()
 window.requestAnimationFrame(draw)
 
 document.getElementById('ctrl-play-pause')
-  .addEventListener('click', function (event){
+  .addEventListener('click', function (event) {
     play = !play
     engine.next.set(engine.current)
 
@@ -109,9 +109,9 @@ document.getElementById('ctrl-play-pause')
     event.target.textContent = event.target.textContent === 'Pause' ? 'Play' : 'Pause'
   })
 document.getElementById('ctrl-hide-show')
-  .addEventListener('click', function (event){
+  .addEventListener('click', function (event) {
     var content = document.querySelector('.text-content')
-    content.classList.toggle('hidden');
+    content.classList.toggle('hidden')
 
     event.preventDefault()
     event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text'

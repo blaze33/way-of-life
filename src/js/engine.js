@@ -1,7 +1,7 @@
 class Engine {
-  constructor(width, height) {
-    this.width = width;
-    this.height = height;
+  constructor (width, height) {
+    this.width = width
+    this.height = height
 
     const buffer = new ArrayBuffer(width * height)
     this.current = new Uint8Array(buffer)
@@ -9,7 +9,7 @@ class Engine {
     this.next = new Uint8Array(nextBuffer)
   }
 
-  cell(i, j) {
+  cell (i, j) {
     if (i === -1) {
       i = this.height - 1
     } else if (i === this.height) {
@@ -27,8 +27,8 @@ class Engine {
     let neighbors
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
-        neighbors =  this.cell(i - 1, j - 1) + this.cell(i - 1, j) + this.cell(i - 1, j + 1)
-        neighbors += this.cell(i    , j - 1) /* this.cell(i, j) */ + this.cell(i    , j + 1)
+        neighbors = this.cell(i - 1, j - 1) + this.cell(i - 1, j) + this.cell(i - 1, j + 1)
+        neighbors += this.cell(i, j - 1) /* this.cell(i, j) */ + this.cell(i, j + 1)
         neighbors += this.cell(i + 1, j - 1) + this.cell(i + 1, j) + this.cell(i + 1, j + 1)
         if (neighbors < 2 || neighbors > 3) {
           this.next[i * this.width + j] = 0
@@ -42,12 +42,12 @@ class Engine {
     this.current.set(this.next)
   }
 
-  setCurrent(i, j, value=1) {
+  setCurrent (i, j, value = 1) {
     this.current[i * this.width + j] = value
   }
 
-  setNext(i, j, value=1) {
+  setNext (i, j, value = 1) {
     this.next[i * this.width + j] = value
   }
 }
-export { Engine as default}
+export {Engine as default}
