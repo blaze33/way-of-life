@@ -111,13 +111,107 @@ article iframe {
         width: 30em
     }
 }
-#worldmap {
-  border: 0;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; }
+[class^="btn"] {
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  background-image: none;
+  background-size: 0;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  transition: background-color 0.3s cubic-bezier(0.64, 0.09, 0.08, 1), box-shadow 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  will-change: background-size, background-image;
+  padding: 10px 20px;
+  display: inline-block;
+  font-family: Roboto;
+  border: 0; }
+  [class^="btn"]:after {
+    position: absolute;
+    content: '';
+    transition: none;
+    background: radial-gradient(circle, white 95%, transparent 95%);
+    background-size: 0.7%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat; }
+  [class^="btn"]:focus {
+    outline: none;
+    background-size: 1000%;
+    transition: all 1s cubic-bezier(0.64, 0.09, 0.08, 1); }
+
+.btn--float {
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background-image: radial-gradient(circle, #ff5722 1%, #ff916f 15%, transparent 30%);
+  background-color: #ff5722;
+  will-change: box-shadow, background-color;
+  font-size: 22px;
+  padding: 0; }
+  .btn--float:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 15px 0 rgba(0, 0, 0, 0.13);
+    background-color: #ff6a3c; }
+
+.btn--raised {
+  border-radius: 1.98px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.14), 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+  background-image: radial-gradient(circle, #3498db 1%, #75b9e7 15%, transparent 30%);
+  background-color: #3498db;
+  will-change: box-shadow, background-color;
+  color: white; }
+  .btn--raised:hover {
+    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.16), 0 4px 15px 0 rgba(0, 0, 0, 0.13);
+    background-color: #4aa3df; }
+
+.btn--flat {
+  background-image: radial-gradient(circle, #7f8c8d 1%, #a7b0b1 15%, transparent 30%);
+  background-color: #7f8c8d;
+  background-color: #fcfcfc;
+  box-shadow: none; }
+
+.btn--primary {
+  background-image: radial-gradient(circle, #e67e22 1%, #eea667 15%, transparent 30%);
+  background-color: #e67e22; }
+  .btn--primary:hover {
+    background-color: #e98b39; }
+
+.btn--secondary {
+  background-image: radial-gradient(circle, #7f8c8d 1%, #a7b0b1 15%, transparent 30%);
+  background-color: #7f8c8d; }
+  .btn--secondary:hover {
+    background-color: #8c9899; }
+
+.btn--accent {
+  background-image: radial-gradient(circle, #ff5722 1%, #ff916f 15%, transparent 30%);
+  background-color: #ff5722; }
+  .btn--accent:hover {
+    background-color: #ff6a3c; }
+
+.btn--red {
+  background-image: radial-gradient(circle, #e74c3c 1%, #ef8b80 15%, transparent 30%);
+  background-color: #e74c3c; }
+  .btn--red:hover {
+    background-color: #ea6153; }
+
+.btn--yellow {
+  background-image: radial-gradient(circle, #f1c40f 1%, #f5d657 15%, transparent 30%);
+  background-color: #f1c40f; }
+  .btn--yellow:hover {
+    background-color: #f2ca27; }
+
+.btn--green {
+  background-image: radial-gradient(circle, #4caf50 1%, #80c883 15%, transparent 30%);
+  background-color: #4caf50; }
+  .btn--green:hover {
+    background-color: #5cb860; }
+
+.btn--blue {
+  background-image: radial-gradient(circle, #2196f3 1%, #6ab8f7 15%, transparent 30%);
+  background-color: #2196f3; }
+  .btn--blue:hover {
+    background-color: #39a1f4; }
 
 .github-corner svg {
   fill: rgba(222, 122, 39, 0.5);
@@ -149,3 +243,53 @@ article iframe {
     animation: none; }
   .github-corner .octo-arm {
     animation: octocat-wave 560ms ease-in-out; } }
+
+::-moz-selection {
+  background: #fff !important;
+  color: #444 !important; }
+
+::selection {
+  background: rgba(255, 255, 255, 0) !important;
+  color: #444 !important; }
+
+#universe {
+  border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; }
+
+.APL {
+  background: rgba(243, 243, 243, 0.5);
+  color: #500;
+  font-family: "APL385", "APL385 Unicode", "APLX Upright", "Courier APL2 Unicode", "SImPL", "SiMPL medium", monospace;
+  text-align: center;
+  padding: 0.5em 0;
+  border-radius: 0.5em; }
+  .APL a {
+    text-decoration: none; }
+
+.controls {
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0; }
+
+.hidden {
+  display: none; }
+
+.github-link {
+  text-align: center; }
+  .github-link a {
+    text-decoration: none; }
+  .github-link .octicon {
+    vertical-align: bottom; }
+
+#info {
+  min-width: 10rem;
+  display: inline-block; }

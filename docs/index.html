@@ -3,16 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <title>Game of life</title>
-<link href="css/styles.css?84c8c38b" rel="stylesheet"></head>
+<link href="css/styles.css?a6d1e49a" rel="stylesheet"></head>
 <body>
   <div class="article">
-    <section class="content">
-      <h1>Conway's game of life demo</h1>
-      <p>This is a javascript implementation of conway's game of life using an HTML canvas to draw it.</p>
-      <p>Click or touch the screen to add new cells.</p>
-      <p id="info"></p>
+    <canvas id="universe"></canvas>
+    <section class="content text-content">
+      <h1>Conway's game of life</h1>
+      <p>
+        The <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">original game</a> features an infinite grid of square cells which can be alive or dead. Each cell interacts with its eight neighbours following two rules:
+      </p>
+      <ol>
+        <li>An empty cell that has exactly 3 neighbors is "born" into in the next generation.</li>
+        <li>An occupied cell that has exactly 2 or 3 neighbors survives to the next generation. Otherwise, its occupant dies (of loneliness or overcrowding).</li>
+      </ol>
+      <p>There's is a one line implementation of this game in <a href="https://en.wikipedia.org/wiki/APL_(programming_language)">APL</a>:</p>
+      <p class="APL">
+        <a href="https://dfns.dyalog.com/n_life.htm">
+          life←{ ↑1 ⍵∨.∧3 4=+/,¯1 0 1∘.⊖¯1 0 1∘.⌽⊂⍵ }
+        </a>
+      </p>
+      <p>What you are seeing is a javascript implementation of conway's game of life using an HTML canvas to draw it.</p>
+      <p><strong>Click or touch the screen to add new cells.</strong></p>
+      <p>This implementation features a universe that is a torus, ie. screen borders are connected and a cell that goes through the right border will reappear on the left one.</p>
+      <p class="github-link"><a href="https://github.com/blaze33/game-of-life">
+        <svg aria-hidden="true" class="octicon octicon-mark-github" height="32" version="1.1" viewBox="0 0 16 16" width="32"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>
+        blaze33/game-of-life
+      </a></p>
     </section>
-    <canvas id="worldmap"></canvas>
+    <section class="content controls">
+      <button class="btn--raised btn--primary" id="ctrl-play-pause">Pause</button>
+      <span id="info"></span>
+      <button class="btn--raised btn--secondary" id="ctrl-hide-show">Hide text</button>
+    </section>
   </div>
   <a href="https://github.com/blaze33/game-of-life" class="github-corner" aria-label="View source on Github">
     <svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true">
@@ -22,5 +44,5 @@
       </path>
     </svg>
   </a>
-<script type="text/javascript" src="js/styles.js?009fdb61"></script><script type="text/javascript" src="js/bundle.js?e8ff7e73"></script></body>
+<script type="text/javascript" src="js/bundle.js?9b204956"></script><script type="text/javascript" src="js/styles.js?85e5597d"></script></body>
 </html>
