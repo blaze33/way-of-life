@@ -1,51 +1,73 @@
+// surface imports and customization
+// Colors
+@import "~surface/src/scss/_imports/_colors.scss";
+$primary: #e67e22;
+$secondary: $asbestos;
+$accent: #ff5722;
+
+@import "~surface/src/scss/buttons.scss";
+
 @import 'screen.css';
 
-#worldmap {
+@import 'github-corner.scss';
+
+::-moz-selection {
+  background: #fff !important;
+  color: #444 !important;
+}
+
+::selection {
+  background: rgba(255, 255, 255, 0) !important;
+  color: #444 !important;
+}
+
+#universe {
     border: 0;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: -1;
 }
 
-.github-corner svg {
-    fill: rgba(222,122,39,0.5);
-    color: #fff;
+.APL {
+    background: rgba(243, 243, 243, 0.5);
+    color: #500;
+    font-family: "APL385", "APL385 Unicode", "APLX Upright", "Courier APL2 Unicode", "SImPL", "SiMPL medium", monospace;
+    text-align: center;
+    padding: 0.5em 0;
+    border-radius: 0.5em;
+    a {
+        text-decoration: none;
+    }
+}
+
+.controls {
+    text-align: center;
     position: absolute;
-    top: 0;
-    border: 0;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
     right: 0;
 }
 
-.github-corner svg:hover {
-    fill: rgba(255,118,5,0.5);
+.hidden {
+    display: none;
 }
 
-.github-corner:hover .octo-arm {
-    animation: octocat-wave 560ms ease-in-out
-}
-
-@keyframes octocat-wave {
-    0%,
-    100% {
-        transform: rotate(0)
+.github-link {
+    text-align: center;
+    a {
+        text-decoration: none;
     }
-    20%,
-    60% {
-        transform: rotate(-25deg)
-    }
-    40%,
-    80% {
-        transform: rotate(10deg)
+    .octicon {
+        vertical-align: bottom;
     }
 }
 
-@media (max-width:500px) {
-    .github-corner:hover .octo-arm {
-        animation: none
-    }
-    .github-corner .octo-arm {
-        animation: octocat-wave 560ms ease-in-out
-    }
+#info {
+    min-width: 10rem;
+    display: inline-block;
 }
