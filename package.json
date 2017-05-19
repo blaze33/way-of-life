@@ -11,8 +11,8 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "serve": "webpack-dev-server --open",
-    "test": "standard src/",
-    "fix": "standard src/ --fix"
+    "test": "standard src/**/*.js",
+    "fix": "standard src/**/*.js --fix"
   },
   "keywords": [],
   "author": "",
