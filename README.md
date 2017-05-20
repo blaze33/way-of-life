@@ -4,6 +4,7 @@ Conway's game of life implementation in javascript using a canvas element for re
 
 [Demo](https://blaze33.github.io/way-of-life/)
 
+[![npm](https://img.shields.io/npm/v/way-of-life.svg)](https://www.npmjs.com/package/way-of-life)
 [![Build Status](https://travis-ci.org/blaze33/way-of-life.svg?branch=master)](https://travis-ci.org/blaze33/way-of-life)
 
 ## Installation
