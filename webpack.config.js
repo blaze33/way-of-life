@@ -21,7 +21,7 @@ module.exports = function (env) {
     output: {
       path: path.resolve(__dirname, 'docs'),
       publicPath: '',
-      filename: 'js/[name].js?[chunkhash:8]'
+      filename: `js/[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
     },
     module: {
       loaders: [
