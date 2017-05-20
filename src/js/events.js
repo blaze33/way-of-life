@@ -15,7 +15,7 @@ class MouseEventHandler {
       {eventType: 'mouseup', callback: this.mouseIsUp.bind(this)},
       {eventType: 'mousemove', callback: this.addCells.bind(this)},
       {eventType: 'touchmove',
-        callback: (event) => {
+        callback: event => {
           for (let i = 0; i < event.touches.length; i++) {
             this.addCells(event.touches[i], true)
           }
@@ -24,7 +24,7 @@ class MouseEventHandler {
   }
 
   addEvents (events = []) {
-    events.forEach((event) => {
+    events.forEach(event => {
       this.listeners.push(event)
       let target = document
       if (event.selector) {

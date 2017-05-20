@@ -35,11 +35,11 @@ window.onload = () => {
   acorn(engine, 0, 0)
 
   // mouse events
-  const playPauseToggle = (event) => {
+  const playPauseToggle = event => {
     renderer.togglePlay()
     event.target.textContent = event.target.textContent === 'Pause' ? 'Play' : 'Pause'
   }
-  const hideContentToggle = (event) => {
+  const hideContentToggle = event => {
     var content = document.querySelector('.text-content')
     content.classList.toggle('hidden')
     event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text'
