@@ -1,4 +1,4 @@
-# The Game of Life
+# The Way of Life
 
 Conway's game of life implementation in javascript using a canvas element for rendering.
 
