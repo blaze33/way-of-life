@@ -3,28 +3,36 @@
 import {erase, cross} from './patterns'
 
 class MouseEventHandler {
-  constructor (canvas, engine, renderer, events={}) {
+  constructor (canvas, engine, renderer) {
     this.canvas = canvas
     this.engine = engine
     this.renderer = renderer
     this.mouseDown = false
+    this.listeners = []
 
-    document.body.onmousedown = this.mouseIsDown.bind(this)
-    document.body.onmouseup = this.mouseIsUp.bind(this)
+    this.addEvents([
+      {eventType: 'mousedown', callback: this.mouseIsDown.bind(this)},
+      {eventType: 'mouseup', callback: this.mouseIsUp.bind(this)},
+      {eventType: 'mousemove', callback: this.addCells.bind(this)},
+      {eventType: 'touchmove',
+        callback: (event) => {
+          for (let i = 0; i < event.touches.length; i++) {
+            this.addCells(event.touches[i], true)
+          }
+        }}
+    ])
+  }
 
-    document.addEventListener('mousemove', this.addCells.bind(this))
-    document.addEventListener('touchmove', function (event) {
-      for (let i = 0; i < event.touches.length; i++) {
-        this.addCells(event.touches[i], true)
+  addEvents (events = []) {
+    events.forEach((event) => {
+      this.listeners.push(event)
+      let target = document
+      if (event.selector) {
+        target = document.querySelector(event.selector)
       }
+      console.log(target, event)
+      target.addEventListener(event.eventType, event.callback)
     })
-
-    for (let selector in events) {
-      document.querySelector(selector).addEventListener(
-        events[selector].eventType,
-        events[selector].callback
-      )
-    }
   }
 
   addCells (event, touch = false) {
@@ -56,7 +64,6 @@ class MouseEventHandler {
   mouseIsUp (event) {
     this.mouseDown = false
   }
-
 }
 
 export {MouseEventHandler as default}

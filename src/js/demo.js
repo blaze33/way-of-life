@@ -1,7 +1,7 @@
 'use strict'
 
 import Engine from './engine'
-import {acorn, cross, erase} from './patterns'
+import {acorn} from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
 
@@ -44,16 +44,19 @@ window.onload = () => {
     content.classList.toggle('hidden')
     event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text'
   }
-  const events = new MouseEventHandler(canvas, engine, renderer, {
-    [playButtonSelector]: {
+  const events = new MouseEventHandler(canvas, engine, renderer)
+  events.addEvents([
+    {
+      selector: playButtonSelector,
       eventType: 'click',
       callback: playPauseToggle
     },
-    [hideButtonSelector]: {
+    {
+      selector: hideButtonSelector,
       eventType: 'click',
       callback: hideContentToggle
     }
-  })
+  ])
 
   // start
   renderer.start()
