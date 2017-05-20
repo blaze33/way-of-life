@@ -1,3 +1,5 @@
+'use strict'
+
 function acorn (engine, i, j) {
   engine.set(i - 1, j)
   engine.set(i, j + 2)

@@ -1,3 +1,5 @@
+'use strict'
+
 class Renderer {
   constructor (canvas, engine, options = {}) {
     this.canvas = canvas
@@ -8,6 +10,8 @@ class Renderer {
     this.pixelsPerCell = options.pixelsPerCell || 5
     this.desiredFPS = options.desiredFPS || 30
     this.fpsNode = options.fpsNode || false
+    this.strokeStyle = options.strokeStyle || 'rgba(255,118,5,0.5)'
+    this.fillStyle = options.fillStyle || 'rgba(222,122,39,0.5)'
 
     // renderer variables
     this.play = false
@@ -30,8 +34,8 @@ class Renderer {
 
     // display engine state on each frame
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-    this.context.strokeStyle = 'rgba(255,118,5,0.5)'
-    this.context.fillStyle = 'rgba(222,122,39,0.5)'
+    this.context.strokeStyle = this.strokeStyle
+    this.context.fillStyle = this.fillStyle
     for (let i = 0; i < this.engine.height; i++) {
       for (let j = 0; j < this.engine.width; j++) {
         if (this.engine.cell(i, j)) {

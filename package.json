@@ -1,6 +1,6 @@
 {
   "name": "way-of-life",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Conway's game of life",
   "repository": {
     "type": "git",
@@ -12,18 +12,20 @@
   },
   "main": "src/js/index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p --env production",
     "watch": "webpack --watch",
     "serve": "webpack-dev-server --open",
     "test": "standard src/**/*.js",
     "fix": "standard src/**/*.js --fix"
   },
   "keywords": [
-    "conway", "game", "game of life"
+    "conway",
+    "game",
+    "game of life"
   ],
   "author": {
-    "name" : "Maxime Rouyrre",
-    "url" : "http://www.openbloc.fr/"
+    "name": "Maxime Rouyrre",
+    "url": "http://www.openbloc.fr/"
   },
   "license": "MIT",
   "devDependencies": {
@@ -37,14 +39,14 @@
     "html-webpack-plugin": "^2.28.0",
     "image-webpack-loader": "^3.3.0",
     "node-sass": "^4.5.2",
+    "purify-css": "^1.2.2",
+    "purifycss-webpack": "^0.7.0",
     "sass-loader": "^6.0.3",
     "standard": "^10.0.2",
     "style-loader": "^0.17.0",
     "surface": "github:blaze33/surface",
-    "url-loader": "^0.5.8",
     "webpack": "^2.5.1",
-    "webpack-dev-server": "^2.4.5",
-    "webpack-omit-js-for-css-plugin": "^0.1.0"
+    "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {}
 }

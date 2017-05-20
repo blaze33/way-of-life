@@ -1,13 +1,18 @@
 const path = require('path')
+const glob = require('glob');
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const PurifyCSSPlugin = require('purifycss-webpack');
 
-const extractSass = new ExtractTextPlugin({
-  filename: 'css/[name].css?[contenthash:8]',
-  disable: process.env.NODE_ENV === 'development'
-})
 
 module.exports = function (env) {
+
+  const extractSass = new ExtractTextPlugin({
+    filename: 'css/[name].css?[contenthash:8]',
+    disable: env !== 'production',
+    allChunks: true,
+  })
+
   return {
     entry: {
       bundle: './src/js/demo.js',
@@ -29,7 +34,7 @@ module.exports = function (env) {
         }, {
           test: /\.scss$/,
           use: extractSass.extract({
-            use: ['css-loader', 'sass-loader?sourceMap'],
+            use: ['css-loader?sourceMap', 'sass-loader?sourceMap'],
             fallback: 'style-loader',
             publicPath: '../'
           })
@@ -53,11 +58,15 @@ module.exports = function (env) {
       extractSass,
       new HtmlWebpackPlugin({
         template: 'src/index.html'
-      })
+      }),
+      new PurifyCSSPlugin({
+        paths: glob.sync(path.join(__dirname, 'src/*.html')),
+      }),
     ],
     devServer: {
       host: '0.0.0.0',
       disableHostCheck: true
-    }
+    },
+    devtool: env === 'production' ? false : 'source-map'
   }
 }

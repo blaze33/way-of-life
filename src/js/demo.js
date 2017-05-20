@@ -3,79 +3,58 @@
 import Engine from './engine'
 import {acorn, cross, erase} from './patterns'
 import Renderer from './renderer'
+import MouseEventHandler from './events'
 
-const canvas = document.getElementById('universe')
+const canvasSelector = '#universe'
+const fpsNodeSelector = '#fps-info'
+const playButtonSelector = '#ctrl-play-pause'
+const hideButtonSelector = '#ctrl-hide-show'
 
+const desiredFPS = 30
 const pixelsPerCell = 5
-const width = ~~(canvas.clientWidth / pixelsPerCell)
-const height = ~~(canvas.clientHeight / pixelsPerCell)
-const engine = new Engine(width, height)
+const strokeStyle = 'rgba(255,118,5,0.5)'
+const fillStyle = 'rgba(222,122,39,0.5)'
 
-const renderer = new Renderer(canvas, engine, {
-  desiredFPS: 30,
-  pixelsPerCell,
-  fpsNode: document.getElementById('fps-info')
-})
+window.onload = () => {
+  const canvas = document.querySelector(canvasSelector)
 
-// starting position at the center, hence divide by 2
-acorn(engine, ~~(height / 2), ~~(width / 2))
-acorn(engine, 0, 0)
+  const width = ~~(canvas.clientWidth / pixelsPerCell)
+  const height = ~~(canvas.clientHeight / pixelsPerCell)
+  const engine = new Engine(width, height)
 
-// mouse events
-var mouseDown = false
-function mouseIsDown (event) {
-  if (event.button === 0) {
-    mouseDown = true
-    addCells(event)
-  }
-}
-function mouseIsUp (event) {
-  mouseDown = false
-}
-document.body.onmousedown = mouseIsDown
-document.body.onmouseup = mouseIsUp
-function addCells (event, touch = false) {
-  const rect = canvas.getBoundingClientRect()
-  const mousePos = {
-    x: (event.clientX - rect.left) / (rect.right - rect.left) * canvas.clientWidth,
-    y: (event.clientY - rect.top) / (rect.bottom - rect.top) * canvas.clientHeight
-  }
-  const pos = {
-    i: ~~(mousePos.y / pixelsPerCell),
-    j: ~~(mousePos.x / pixelsPerCell)
-  }
-  if (mouseDown || touch) {
-    if (event.ctrlKey) {
-      erase(engine, pos.i, pos.j)
-    } else {
-      cross(engine, pos.i, pos.j)
-    }
-  }
-}
-
-document.addEventListener('mousemove', addCells)
-document.addEventListener('touchmove', function (event) {
-  for (let i = 0; i < event.touches.length; i++) {
-    addCells(event.touches[i], true)
-  }
-})
-
-// control buttons events
-document.getElementById('ctrl-play-pause')
-  .addEventListener('click', function (event) {
-    renderer.togglePlay()
-
-    event.preventDefault()
-    event.target.textContent = event.target.textContent === 'Pause' ? 'Play' : 'Pause'
+  const renderer = new Renderer(canvas, engine, {
+    desiredFPS,
+    pixelsPerCell,
+    fpsNode: document.querySelector(fpsNodeSelector),
+    strokeStyle,
+    fillStyle
   })
-document.getElementById('ctrl-hide-show')
-  .addEventListener('click', function (event) {
+
+  // starting position at the center, hence divide by 2
+  acorn(engine, ~~(height / 2), ~~(width / 2))
+  acorn(engine, 0, 0)
+
+  // mouse events
+  const playPauseToggle = (event) => {
+    renderer.togglePlay()
+    event.target.textContent = event.target.textContent === 'Pause' ? 'Play' : 'Pause'
+  }
+  const hideContentToggle = (event) => {
     var content = document.querySelector('.text-content')
     content.classList.toggle('hidden')
-
-    event.preventDefault()
     event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text'
+  }
+  const events = new MouseEventHandler(canvas, engine, renderer, {
+    [playButtonSelector]: {
+      eventType: 'click',
+      callback: playPauseToggle
+    },
+    [hideButtonSelector]: {
+      eventType: 'click',
+      callback: hideContentToggle
+    }
   })
 
-// start
-renderer.start()
+  // start
+  renderer.start()
+}

@@ -1,3 +1,5 @@
+'use strict'
+
 class Engine {
   constructor (width, height) {
     this.width = width
