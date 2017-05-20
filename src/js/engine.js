@@ -58,4 +58,5 @@ class Engine {
     this._next[this.index(i, j)] = value
   }
 }
+
 export {Engine as default}

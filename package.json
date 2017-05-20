@@ -1,12 +1,16 @@
 {
-  "name": "game-of-life",
-  "version": "1.0.0",
+  "name": "way-of-life",
+  "version": "0.0.1",
   "description": "Conway's game of life",
   "repository": {
     "type": "git",
-    "url": "git://github.com/blaze33/game-of-life.git"
+    "url": "git://github.com/blaze33/way-of-life.git"
   },
-  "main": "index.js",
+  "homepage": "https://blaze33.github.io/way-of-life/",
+  "bugs": {
+    "url": "https://github.com/blaze33/way-of-life/issues"
+  },
+  "main": "src/js/index.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
@@ -14,9 +18,14 @@
     "test": "standard src/**/*.js",
     "fix": "standard src/**/*.js --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "conway", "game", "game of life"
+  ],
+  "author": {
+    "name" : "Maxime Rouyrre",
+    "url" : "http://www.openbloc.fr/"
+  },
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.24.1",
     "babel-loader": "^7.0.0",

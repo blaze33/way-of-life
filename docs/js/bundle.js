@@ -379,7 +379,7 @@ document.addEventListener('touchmove', function (event) {
   }
 });
 
-// control buttons eavents
+// control buttons events
 document.getElementById('ctrl-play-pause').addEventListener('click', function (event) {
   renderer.togglePlay();
 
