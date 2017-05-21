@@ -15,8 +15,8 @@
     "build": "webpack -p --env production",
     "watch": "webpack --watch",
     "serve": "webpack-dev-server --open",
-    "test": "standard src/**/*.js",
-    "fix": "standard src/**/*.js --fix"
+    "test": "standard src/**/*.js webpack.config.js",
+    "fix": "standard src/**/*.js webpack.config.js --fix"
   },
   "keywords": [
     "conway",

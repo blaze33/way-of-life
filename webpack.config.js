@@ -1,16 +1,14 @@
 const path = require('path')
-const glob = require('glob');
+const glob = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const PurifyCSSPlugin = require('purifycss-webpack');
-
+const PurifyCSSPlugin = require('purifycss-webpack')
 
 module.exports = function (env) {
-
   const extractSass = new ExtractTextPlugin({
     filename: 'css/[name].css?[contenthash:8]',
     disable: env !== 'production',
-    allChunks: true,
+    allChunks: true
   })
 
   return {
@@ -60,8 +58,8 @@ module.exports = function (env) {
         template: 'src/index.html'
       }),
       new PurifyCSSPlugin({
-        paths: glob.sync(path.join(__dirname, 'src/*.html')),
-      }),
+        paths: glob.sync(path.join(__dirname, 'src/*.html'))
+      })
     ],
     devServer: {
       host: '0.0.0.0',
