@@ -4,30 +4,36 @@ import Engine from './engine'
 import {acorn} from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
+import queryString from 'query-string'
 
-const canvasSelector = '#universe'
-const fpsNodeSelector = '#fps-info'
-const playButtonSelector = '#ctrl-play-pause'
-const hideButtonSelector = '#ctrl-hide-show'
+const defaultOptions = {
+  canvasSelector: '#universe',
+  fpsNodeSelector: '#fps-info',
+  playButtonSelector: '#ctrl-play-pause',
+  hideButtonSelector: '#ctrl-hide-show',
+  desiredFPS: 30,
+  pixelsPerCell: 5,
+  strokeStyle: 'rgba(255,118,5,0.5)',
+  fillStyle: 'rgba(222,122,39,0.5)'
+}
+const urlOptions = queryString.parse(location.search)
+const options = Object.assign(defaultOptions, urlOptions)
+options.desiredFPS = parseInt(options.desiredFPS)
+options.pixelsperCell = parseInt(options.pixelsperCell)
 
-const desiredFPS = 30
-const pixelsPerCell = 5
-const strokeStyle = 'rgba(255,118,5,0.5)'
-const fillStyle = 'rgba(222,122,39,0.5)'
+const gameOfLife = () => {
+  const canvas = document.querySelector(options.canvasSelector)
 
-window.onload = () => {
-  const canvas = document.querySelector(canvasSelector)
-
-  const width = ~~(canvas.clientWidth / pixelsPerCell)
-  const height = ~~(canvas.clientHeight / pixelsPerCell)
+  const width = ~~(canvas.clientWidth / options.pixelsPerCell)
+  const height = ~~(canvas.clientHeight / options.pixelsPerCell)
   const engine = new Engine(width, height)
 
   const renderer = new Renderer(canvas, engine, {
-    desiredFPS,
-    pixelsPerCell,
-    fpsNode: document.querySelector(fpsNodeSelector),
-    strokeStyle,
-    fillStyle
+    desiredFPS: options.desiredFPS,
+    pixelsPerCell: options.pixelsPerCell,
+    fpsNode: document.querySelector(options.fpsNodeSelector),
+    strokeStyle: options.strokeStyle,
+    fillStyle: options.fillStyle
   })
 
   // starting position at the center, hence divide by 2
@@ -47,12 +53,12 @@ window.onload = () => {
   const events = new MouseEventHandler(canvas, engine, renderer)
   events.addEvents([
     {
-      selector: playButtonSelector,
+      selector: options.playButtonSelector,
       eventType: 'click',
       callback: playPauseToggle
     },
     {
-      selector: hideButtonSelector,
+      selector: options.hideButtonSelector,
       eventType: 'click',
       callback: hideContentToggle
     }
@@ -61,3 +67,5 @@ window.onload = () => {
   // start
   renderer.start()
 }
+
+window.onload = gameOfLife

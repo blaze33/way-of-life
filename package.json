@@ -41,6 +41,7 @@
     "node-sass": "^4.5.2",
     "purify-css": "^1.2.2",
     "purifycss-webpack": "^0.7.0",
+    "query-string": "^4.3.4",
     "sass-loader": "^6.0.3",
     "standard": "^10.0.2",
     "style-loader": "^0.17.0",
