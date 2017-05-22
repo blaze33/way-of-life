@@ -16,7 +16,7 @@ const defaultOptions = {
   strokeStyle: 'rgba(255,118,5,0.5)',
   fillStyle: 'rgba(222,122,39,0.5)'
 }
-const urlOptions = queryString.parse(location.search)
+const urlOptions = queryString.parse(window.location.search)
 const options = Object.assign(defaultOptions, urlOptions)
 options.desiredFPS = parseInt(options.desiredFPS)
 options.pixelsperCell = parseInt(options.pixelsperCell)
