@@ -18,8 +18,8 @@ const defaultOptions = {
 }
 const urlOptions = queryString.parse(window.location.search)
 const options = Object.assign(defaultOptions, urlOptions)
-options.desiredFPS = parseInt(options.desiredFPS)
-options.pixelsperCell = parseInt(options.pixelsperCell)
+options.desiredFPS = parseInt(options.desiredFPS, 10)
+options.pixelsperCell = parseInt(options.pixelsperCell, 10)
 
 const gameOfLife = () => {
   const canvas = document.querySelector(options.canvasSelector)
