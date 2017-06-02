@@ -18,6 +18,7 @@ body {
   height: 100%;
   padding: 1em;
   font-family: Alegreya,Palatino,Georgia,serif;
+  font-size: 100%;
   color: #444;
 }
 
@@ -75,14 +76,117 @@ article ol {
     padding: 1.618em;
     margin: 0 auto;
     max-width: 45rem;
-    font-size: 1.25em;
+    font-size: 125%;
   }
 }
 
 @media (min-width:33.236em) and screen and (min-width:30em) and (max-width:63.236em) {
-  .content {
+  .content,  .text-content {
     width: 30em;
   }
+}
+
+/*! normalize.css v7.0.0 | MIT License | github.com/necolas/normalize.css */
+
+html {
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+article,section {
+  display: block;
+}
+
+h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+
+a {
+  background-color: transparent;
+  -webkit-text-decoration-skip: objects;
+}
+
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+mark {
+  background-color: #ff0;
+  color: #000;
+}
+
+small {
+  font-size: 80%;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+button {
+  font-family: sans-serif;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+
+button {
+  overflow: visible;
+}
+
+button {
+  text-transform: none;
+}
+
+[type=reset],[type=submit],button,html [type=button] {
+  -webkit-appearance: button;
+}
+
+[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+[type=checkbox],[type=radio] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type=search] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+[type=search]::-webkit-search-cancel-button,[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+canvas {
+  display: inline-block;
+}
+
+[hidden] {
+  display: none;
 }
 
 [class^=btn] {
@@ -193,6 +297,12 @@ article ol {
   }
 }
 
+.github-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+
 ::-moz-selection {
   background: #fff!important;
   color: #444!important;
@@ -240,7 +350,10 @@ article ol {
 }
 
 .github-link {
-  text-align: center;
+  position: fixed;
+  top: 24px;
+  left: 125px;
+  font-size: 1rem;
 }
 
 .github-link a {
@@ -248,7 +361,8 @@ article ol {
 }
 
 .github-link .octicon {
-  vertical-align: bottom;
+  height: 20px;
+  vertical-align: sub;
 }
 
 #fps-info {
@@ -257,7 +371,15 @@ article ol {
 }
 
 .text-content {
-  margin-bottom: 5rem;
+  position: fixed;
+  top: 55px;
+  bottom: 115px;
+  left: 0;
+  right: 0;
+  max-width: 45em;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: auto;
 }
 
 small {
