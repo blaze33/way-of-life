@@ -1,3 +1,6 @@
+// normalize.css
+@import "~normalize.css";
+
 // surface imports and customization
 // Colors
 @import "~surface/src/scss/_imports/_colors.scss";
@@ -37,6 +40,7 @@ $accent: #ff5722;
     text-align: center;
     padding: 0.5em 0;
     border-radius: 0.5em;
+    // -webkit-text-fill-color: #444;
     a {
         text-decoration: none;
     }
@@ -57,12 +61,16 @@ $accent: #ff5722;
 }
 
 .github-link {
-    text-align: center;
+    position: fixed;
+    top: 24px;
+    left: 125px;
+    font-size: 1rem;
     a {
         text-decoration: none;
     }
     .octicon {
-        vertical-align: bottom;
+        height: 20px;
+        vertical-align: sub;
     }
 }
 
@@ -72,7 +80,21 @@ $accent: #ff5722;
 }
 
 .text-content {
-    margin-bottom: 5rem;
+    position: fixed;
+    top: 55px;
+    bottom: 115px;
+    left: 0;
+    right: 0;
+    max-width: 45em;
+    overflow: scroll;
+    overflow-x: hidden;
+    margin: auto;
+
+    // nice in FF, broken in chrome
+    // -webkit-text-fill-color: transparent;
+    // background: -webkit-linear-gradient(transparent, #444 5%, #444 95%, transparent);
+    // background: -o-linear-gradient(transparent, #444 5%, #444 95%, transparent);
+    // -webkit-background-clip: text;
 }
 
 small {

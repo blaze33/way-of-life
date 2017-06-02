@@ -17,6 +17,7 @@ body {
     padding: 1em;
     margin: 0;
     font-family: "Alegreya", Palatino, Georgia, serif;
+    font-size: 100%;
     color: #444
 }
 
@@ -102,12 +103,12 @@ article iframe {
         padding: 1.618em;
         margin: 0 auto;
         max-width: 45rem;
-        font-size: 1.25em
+        font-size: 125%;
     }
 }
 
 @media all and (min-width: 33.236em) and screen and (min-width: 30em) and (max-width: 63.236em) {
-    .content {
+    .content, .text-content {
         width: 30em
     }
 }
