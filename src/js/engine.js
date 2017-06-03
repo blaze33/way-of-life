@@ -12,16 +12,8 @@ class Engine {
   }
 
   index (i, j) {
-    if (i === -1) {
-      i = this.height - 1
-    } else if (i === this.height) {
-      i = 0
-    }
-    if (j === -1) {
-      j = this.width - 1
-    } else if (j === this.width) {
-      j = 0
-    }
+    i = i === -1 ? this.height - 1 : i === this.height ? 0 : i
+    j = j === -1 ? this.width - 1 : j === this.width ? 0 : j
     return i * this.width + j
   }
 
