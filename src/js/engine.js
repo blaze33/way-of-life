@@ -2,13 +2,18 @@
 
 class Engine {
   constructor (width, height) {
+    this.wasm = false
     this.width = width
     this.height = height
+    this.module = {calledRun: true}
+  }
 
-    const buffer = new ArrayBuffer(width * height)
+  init () {
+    const buffer = new ArrayBuffer(this.width * this.height)
     this._current = new Uint8Array(buffer)
-    const nextBuffer = new ArrayBuffer(width * height)
+    const nextBuffer = new ArrayBuffer(this.width * this.height)
     this._next = new Uint8Array(nextBuffer)
+    this.module = {calledRun: true}
   }
 
   index (i, j) {
@@ -19,6 +24,10 @@ class Engine {
 
   cell (i, j) {
     return this._current[this.index(i, j)]
+  }
+
+  cellSafe (i, j) {
+    return this._current[i * this.width + j]
   }
 
   next (i, j) {

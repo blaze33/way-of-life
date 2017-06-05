@@ -38,15 +38,17 @@ class Renderer {
     this.context.fillStyle = this.fillStyle
     for (let i = 0; i < this.engine.height; i++) {
       for (let j = 0; j < this.engine.width; j++) {
-        if (this.engine.cell(i, j)) {
+        if (this.engine.cellSafe(i, j)) {
           this.context.strokeRect(
             this.pixelsPerCell * j, this.pixelsPerCell * i,
             this.pixelsPerCell, this.pixelsPerCell
           )
-          this.context.fillRect(
-            this.pixelsPerCell * j, this.pixelsPerCell * i,
-            this.pixelsPerCell, this.pixelsPerCell
-          )
+          if (this.pixelsPerCell > 1) {
+            this.context.fillRect(
+              this.pixelsPerCell * j, this.pixelsPerCell * i,
+              this.pixelsPerCell, this.pixelsPerCell
+            )
+          }
         }
       }
     }

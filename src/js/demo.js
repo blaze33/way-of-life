@@ -1,6 +1,7 @@
 'use strict'
 
 import Engine from './engine'
+import WasmEngine from './wasmEngine'
 import {acorn} from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
@@ -11,10 +12,13 @@ const defaultOptions = {
   fpsNodeSelector: '#fps-info',
   playButtonSelector: '#ctrl-play-pause',
   hideButtonSelector: '#ctrl-hide-show',
+  switchEngineSelector: '#ctrl-engine',
   desiredFPS: 30,
   pixelsPerCell: 5,
   strokeStyle: 'rgba(255,118,5,0.5)',
-  fillStyle: 'rgba(222,122,39,0.5)'
+  fillStyle: 'rgba(222,122,39,0.5)',
+  showText: true,
+  useWasm: true
 }
 const urlOptions = queryString.parse(window.location.search)
 const options = Object.assign(defaultOptions, urlOptions)
@@ -26,7 +30,16 @@ const gameOfLife = () => {
 
   const width = ~~(canvas.clientWidth / options.pixelsPerCell)
   const height = ~~(canvas.clientHeight / options.pixelsPerCell)
-  const engine = new Engine(width, height)
+  const wasmEngine = new WasmEngine(width, height)
+  const jsEngine = new Engine(width, height)
+  var engine
+  console.log(options)
+  if (options.useWasm === true) {
+    engine = wasmEngine
+  } else {
+    engine = jsEngine
+  }
+  window.engine = engine
 
   const renderer = new Renderer(canvas, engine, {
     desiredFPS: options.desiredFPS,
@@ -36,9 +49,6 @@ const gameOfLife = () => {
     fillStyle: options.fillStyle
   })
 
-  // starting position at the center, hence divide by 2
-  acorn(engine, ~~(height / 2), ~~(width / 2))
-  acorn(engine, 0, 0)
 
   // mouse events
   const playPauseToggle = event => {
@@ -49,6 +59,25 @@ const gameOfLife = () => {
     var content = document.querySelector('.text-content')
     content.classList.toggle('hidden')
     event.target.textContent = event.target.textContent === 'Hide text' ? 'Show text' : 'Hide text'
+  }
+  const hideText = () => {
+    var content = document.querySelector('.text-content')
+    content.classList.add('hidden')
+    const hideButton = document.querySelector(options.hideButtonSelector)
+    hideButton.textContent = 'Show text'
+  }
+  if (urlOptions) {
+    hideText()
+  }
+  const switchEngine = event => {
+    if (engine instanceof WasmEngine) {
+      engine = jsEngine
+    } else {
+      engine = wasmEngine
+    }
+    renderer.engine = engine
+    events.engine = engine
+    event.target.textContent = event.target.textContent === 'Use js engine' ? 'Use wasm engine' : 'Use js engine'
   }
   const events = new MouseEventHandler(canvas, engine, renderer)
   events.addEvents([
@@ -61,11 +90,30 @@ const gameOfLife = () => {
       selector: options.hideButtonSelector,
       eventType: 'click',
       callback: hideContentToggle
+    },
+    {
+      selector: options.switchEngineSelector,
+      eventType: 'click',
+      callback: switchEngine
     }
   ])
-
-  // start
-  renderer.start()
+  const checkFlag = () => {
+      if(engine.module.calledRun !== true) {
+        window.setTimeout(checkFlag.bind(this), 100);
+      } else {
+        // allocate the engines state memory
+        wasmEngine.init()
+        jsEngine.init()
+        // initialize some cells at the center
+        acorn(wasmEngine, ~~(height / 2), ~~(width / 2))
+        acorn(wasmEngine, 0, 0)
+        acorn(jsEngine, ~~(height / 2), ~~(width / 2))
+        acorn(jsEngine, 0, 0)
+        // start
+        renderer.start()
+      }
+    }
+    checkFlag();
 }
 
 window.onload = gameOfLife

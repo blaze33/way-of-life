@@ -9,6 +9,7 @@ $secondary: $asbestos;
 $accent: #ff5722;
 
 @import "~surface/src/scss/buttons.scss";
+@import "~surface/src/scss/form.scss";
 
 @import 'screen.css';
 
@@ -54,6 +55,10 @@ $accent: #ff5722;
     margin-right: auto;
     left: 0;
     right: 0;
+
+    button {
+        margin: 0.5rem 1rem;
+    }
 }
 
 .hidden {
@@ -76,7 +81,11 @@ $accent: #ff5722;
 
 #fps-info {
     min-width: 10rem;
-    display: inline-block;
+    position: fixed;
+    top: 26px;
+    left: 0;
+    right: 80px;
+    text-align: right;
 }
 
 .text-content {
@@ -85,7 +94,7 @@ $accent: #ff5722;
     bottom: 115px;
     left: 0;
     right: 0;
-    max-width: 45em;
+    max-width: 45rem;
     overflow: scroll;
     overflow-x: hidden;
     margin: auto;

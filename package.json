@@ -47,6 +47,7 @@
     "standard": "^10.0.2",
     "style-loader": "^0.17.0",
     "surface": "github:blaze33/surface",
+    "wasm-loader": "^1.0.0",
     "webpack": "^2.5.1",
     "webpack-dev-server": "^2.4.5"
   },

@@ -3,6 +3,8 @@ const glob = require('glob')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 
 module.exports = function (env) {
   const extractSass = new ExtractTextPlugin({
@@ -20,6 +22,9 @@ module.exports = function (env) {
       path: path.resolve(__dirname, 'docs'),
       publicPath: '',
       filename: `js/[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
+    },
+    resolve: {
+      extensions: ['*', '.js', '.jsx', '.wasm']
     },
     module: {
       loaders: [
@@ -49,6 +54,9 @@ module.exports = function (env) {
           loaders: [
             'file-loader?hash=sha512&digest=hex&name=images/[name].[ext]?[hash:8]'
           ]
+        }, {
+          test: /\.wasm$/,
+          loaders: ['wasm-loader']
         }
       ]
     },
@@ -59,7 +67,11 @@ module.exports = function (env) {
       }),
       new PurifyCSSPlugin({
         paths: glob.sync(path.join(__dirname, 'src/*.html'))
-      })
+      }),
+      new CopyWebpackPlugin([{
+        from: 'src/js/wasm/*.wasm',
+        to: 'wasm/[name].wasm'
+      }])
     ],
     devServer: {
       host: '0.0.0.0',
