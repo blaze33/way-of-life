@@ -2,8 +2,8 @@
 
 Conway's game of life implemented both in JavaScript and in WebAssembly using a canvas element for rendering.
 
-[Demo](https://blaze33.github.io/way-of-life/)
-[Demo up to 60FPS, 1 pixel per cell](https://blaze33.github.io/way-of-life/?desiredFPS=60&pixelsPerCell=1)
+* [Demo](https://blaze33.github.io/way-of-life/)
+* [Demo up to 60FPS, 1 pixel per cell](https://blaze33.github.io/way-of-life/?desiredFPS=60&pixelsPerCell=1)
 
 [![npm](https://img.shields.io/npm/v/way-of-life.svg)](https://www.npmjs.com/package/way-of-life)
 [![Build Status](https://travis-ci.org/blaze33/way-of-life.svg?branch=master)](https://travis-ci.org/blaze33/way-of-life)
