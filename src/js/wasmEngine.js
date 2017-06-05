@@ -30,7 +30,6 @@ class WasmEngine {
   set (i, j, value = 1) {
     this.module.asm._set(i, j, value)
   }
-
 }
 
 export {WasmEngine as default}

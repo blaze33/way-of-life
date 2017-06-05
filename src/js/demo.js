@@ -51,7 +51,6 @@ const gameOfLife = () => {
     fillStyle: options.fillStyle
   })
 
-
   // mouse events
   const playPauseToggle = event => {
     renderer.togglePlay()
@@ -100,22 +99,22 @@ const gameOfLife = () => {
     }
   ])
   const checkFlag = () => {
-      if(engine.module.calledRun !== true) {
-        window.setTimeout(checkFlag.bind(this), 100);
-      } else {
+    if (engine.module.calledRun !== true) {
+      window.setTimeout(checkFlag.bind(this), 100)
+    } else {
         // allocate the engines state memory
-        wasmEngine.init()
-        jsEngine.init()
+      wasmEngine.init()
+      jsEngine.init()
         // initialize some cells at the center
-        acorn(wasmEngine, ~~(height / 2), ~~(width / 2))
-        acorn(wasmEngine, 0, 0)
-        acorn(jsEngine, ~~(height / 2), ~~(width / 2))
-        acorn(jsEngine, 0, 0)
+      acorn(wasmEngine, ~~(height / 2), ~~(width / 2))
+      acorn(wasmEngine, 0, 0)
+      acorn(jsEngine, ~~(height / 2), ~~(width / 2))
+      acorn(jsEngine, 0, 0)
         // start
-        renderer.start()
-      }
+      renderer.start()
     }
-    checkFlag();
+  }
+  checkFlag()
 }
 
 window.onload = gameOfLife

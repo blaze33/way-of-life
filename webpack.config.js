@@ -5,7 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-
 module.exports = function (env) {
   const extractSass = new ExtractTextPlugin({
     filename: 'css/[name].css?[contenthash:8]',
