@@ -1,8 +1,9 @@
 # The Way of Life
 
-Conway's game of life implementation in javascript using a canvas element for rendering.
+Conway's game of life implemented both in JavaScript and in WebAssembly using a canvas element for rendering.
 
 [Demo](https://blaze33.github.io/way-of-life/)
+[Demo up to 60FPS, 1 pixel per cell](https://blaze33.github.io/way-of-life/?desiredFPS=60&pixelsPerCell=1)
 
 [![npm](https://img.shields.io/npm/v/way-of-life.svg)](https://www.npmjs.com/package/way-of-life)
 [![Build Status](https://travis-ci.org/blaze33/way-of-life.svg?branch=master)](https://travis-ci.org/blaze33/way-of-life)
@@ -21,6 +22,7 @@ import {Engine, acorn} from 'way-of-life'
 
 // initialize the game with an empty 40x40 matrix
 const engine = new Engine(40, 40)
+engine.init()
 
 // initialize some living cells around the center of the matrix
 acorn(engine, 20, 20)
