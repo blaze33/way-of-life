@@ -21,6 +21,9 @@ const defaultOptions = {
   useWasm: true
 }
 const urlOptions = queryString.parse(window.location.search)
+if (urlOptions.desiredFPS || urlOptions.pixelsperCell) {
+  defaultOptions.showText = false
+}
 const options = Object.assign(defaultOptions, urlOptions)
 options.desiredFPS = parseInt(options.desiredFPS, 10)
 options.pixelsperCell = parseInt(options.pixelsperCell, 10)
@@ -33,7 +36,6 @@ const gameOfLife = () => {
   const wasmEngine = new WasmEngine(width, height)
   const jsEngine = new Engine(width, height)
   var engine
-  console.log(options)
   if (options.useWasm === true) {
     engine = wasmEngine
   } else {
@@ -66,7 +68,7 @@ const gameOfLife = () => {
     const hideButton = document.querySelector(options.hideButtonSelector)
     hideButton.textContent = 'Show text'
   }
-  if (urlOptions) {
+  if (options.showText === false) {
     hideText()
   }
   const switchEngine = event => {

@@ -130,14 +130,14 @@ svg:not(:root) {
   overflow: hidden;
 }
 
-button,input {
+button {
   font-family: sans-serif;
   font-size: 100%;
   line-height: 1.15;
   margin: 0;
 }
 
-button,input {
+button {
   overflow: visible;
 }
 
@@ -258,142 +258,6 @@ canvas {
 
 label {
   color: #2e2e2e;
-}
-
-input[type=email],input[type=password],input[type=text] {
-  margin-bottom: 40px;
-  width: 200px;
-  display: block;
-  border: none;
-  padding: 10px 0;
-  border-bottom: 1px solid #e67e22;
-  will-change: background-position;
-  transition: all .3s cubic-bezier(.64,.09,.08,1);
-  background: linear-gradient(180deg,hsla(0,0%,100%,0) 96%,#e67e22 0);
-  background-position: -200px 0;
-  background-size: 200px 100%;
-  background-repeat: no-repeat;
-  color: #924d10;
-}
-
-input[type=email]:focus,input[type=email]:valid,input[type=password]:focus,input[type=password]:valid,input[type=text]:focus,input[type=text]:valid {
-  box-shadow: none;
-  outline: none;
-  background-position: 0 0;
-}
-
-input[type=email]:focus::-webkit-input-placeholder,input[type=email]:valid::-webkit-input-placeholder,input[type=password]:focus::-webkit-input-placeholder,input[type=password]:valid::-webkit-input-placeholder,input[type=text]:focus::-webkit-input-placeholder,input[type=text]:valid::-webkit-input-placeholder {
-  color: #e67e22;
-  font-size: 11px;
-  transform: translateY(-20px);
-  visibility: visible!important;
-}
-
-input[type=email]::-webkit-input-placeholder,input[type=password]::-webkit-input-placeholder,input[type=text]::-webkit-input-placeholder {
-  transition: all .2s cubic-bezier(.64,.09,.08,1);
-}
-
-input[type=radio] {
-  position: relative;
-  top: 2px;
-  left: 2px;
-  margin: 0 8px;
-  cursor: pointer;
-}
-
-input[type=radio]:before {
-  background-color: #fff;
-  border-radius: 50%;
-  border: 2px solid #e67e22;
-  display: inline-block;
-  top: -2px;
-  left: -2px;
-  background-image: radial-gradient(circle,#e67e22 40%,#fff 50%);
-  background-size: 0;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  will-change: background-size;
-  z-index: 2;
-}
-
-input[type=radio]:after,input[type=radio]:before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  transition: all .3s cubic-bezier(.64,.09,.08,1);
-}
-
-input[type=radio]:after {
-  background: #fff;
-  border-radius: 50%;
-}
-
-input[type=radio]:checked:before {
-  background-size: 14px 14px;
-}
-
-input[type=radio]:focus {
-  outline: none;
-}
-
-input[type=range] {
-  -webkit-appearance: none;
-}
-
-input[type=range]:focus {
-  outline: none;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
-  height: 3px;
-  cursor: pointer;
-  background: #9e9e9e;
-}
-
-input[type=range]::-webkit-slider-thumb {
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  background: #2ecc71;
-  cursor: pointer;
-  -webkit-appearance: none;
-  margin-top: -6px;
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.1),0 2px 10px 0 rgba(0,0,0,.07);
-}
-
-input[type=range]::-moz-range-track {
-  height: 3px;
-  cursor: pointer;
-  background: #9e9e9e;
-}
-
-input[type=range]::-moz-range-thumb {
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  border: none;
-  background: #2ecc71;
-  cursor: pointer;
-}
-
-input[type=range]::-ms-track {
-  cursor: pointer;
-  background: transparent;
-  border-color: transparent;
-  color: transparent;
-}
-
-input[type=range]::-ms-fill-lower {
-  background: #2ecc71;
-}
-
-input[type=range]::-ms-fill-upper {
-  background: #9e9e9e;
-}
-
-input[type=range]::-ms-thumb {
-  background: #2ecc71;
 }
 
 .github-corner svg {
