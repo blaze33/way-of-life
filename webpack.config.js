@@ -76,6 +76,7 @@ module.exports = function (env) {
       host: '0.0.0.0',
       disableHostCheck: true
     },
-    devtool: env === 'production' ? false : 'source-map'
+    devtool: env === 'production' ? false : 'source-map',
+    node: {fs: 'empty'}
   }
 }
