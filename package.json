@@ -1,6 +1,6 @@
 {
   "name": "way-of-life",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Conway's game of life",
   "repository": {
     "type": "git",
