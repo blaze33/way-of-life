@@ -36,17 +36,18 @@ class Renderer {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
     this.context.strokeStyle = this.strokeStyle
     this.context.fillStyle = this.fillStyle
+    const shouldFillRect = this.pixelsPerCell > 1
     for (let i = 0; i < this.engine.height; i++) {
       for (let j = 0; j < this.engine.width; j++) {
         if (this.engine.cellSafe(i, j)) {
+          const jPx = this.pixelsPerCell * j
+          const iPx = this.pixelsPerCell * i
           this.context.strokeRect(
-            this.pixelsPerCell * j, this.pixelsPerCell * i,
-            this.pixelsPerCell, this.pixelsPerCell
+            jPx, iPx, this.pixelsPerCell, this.pixelsPerCell
           )
-          if (this.pixelsPerCell > 1) {
+          if (shouldFillRect) {
             this.context.fillRect(
-              this.pixelsPerCell * j, this.pixelsPerCell * i,
-              this.pixelsPerCell, this.pixelsPerCell
+              jPx, iPx, this.pixelsPerCell, this.pixelsPerCell
             )
           }
         }

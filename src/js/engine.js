@@ -50,15 +50,17 @@ class Engine {
   }
 
   computeNextState () {
+    let neighbors, iM1, iP1, i_, jM1, jP1
+
     this.loopCurrentState()
-    let neighbors
+
     for (let i = 1; i < this._height - 1; i++) {
-      const iM1 = (i - 1) * this._width
-      const iP1 = (i + 1) * this._width
-      const i_ = i * this._width
+      iM1 = (i - 1) * this._width
+      iP1 = (i + 1) * this._width
+      i_ = i * this._width
       for (let j = 1; j < this._width - 1; j++) {
-        const jM1 = j - 1
-        const jP1 = j + 1
+        jM1 = j - 1
+        jP1 = j + 1
         neighbors = this._current[iM1 + jM1]
         neighbors += this._current[iM1 + j]
         neighbors += this._current[iM1 + jP1]
@@ -68,11 +70,11 @@ class Engine {
         neighbors += this._current[iP1 + j]
         neighbors += this._current[iP1 + jP1]
         if (neighbors === 3) {
-          this._next[i * this._width + j] = 1
+          this._next[i_ + j] = 1
         } else if (neighbors === 2) {
-          this._next[i * this._width + j] = this._current[i * this._width + j]
+          this._next[i_ + j] = this._current[i_ + j]
         } else {
-          this._next[i * this._width + j] = 0
+          this._next[i_ + j] = 0
         }
       }
     }
