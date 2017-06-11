@@ -4,22 +4,22 @@ class Engine {
   constructor (width, height) {
     this.wasm = false
     this.width = width
+    this._width = width + 2
     this.height = height
+    this._height = height + 2
     this.module = {calledRun: true}
   }
 
   init () {
-    const buffer = new ArrayBuffer(this.width * this.height)
+    const buffer = new ArrayBuffer(this._width * this._height)
     this._current = new Uint8Array(buffer)
-    const nextBuffer = new ArrayBuffer(this.width * this.height)
+    const nextBuffer = new ArrayBuffer(this._width * this._height)
     this._next = new Uint8Array(nextBuffer)
     this.module = {calledRun: true}
   }
 
   index (i, j) {
-    i = i === -1 ? this.height - 1 : i === this.height ? 0 : i
-    j = j === -1 ? this.width - 1 : j === this.width ? 0 : j
-    return i * this.width + j
+    return i * this._width + j
   }
 
   cell (i, j) {
@@ -27,26 +27,52 @@ class Engine {
   }
 
   cellSafe (i, j) {
-    return this._current[i * this.width + j]
+    return this._current[(i + 1) * this._width + j + 1]
   }
 
   next (i, j) {
     return this._next[this.index(i, j)]
   }
 
+  loopCurrentState () {
+    for (let j = 1; j < this._width + 1; j++) {
+      this._current[this.index(0, j)] = this._current[this.index(this._height - 2, j)]
+      this._current[this.index(this._height - 1, j)] = this._current[this.index(1, j)]
+    }
+    for (let i = 1; i < this._height + 1; i++) {
+      this._current[this.index(i, 0)] = this._current[this.index(i, this._width - 2)]
+      this._current[this.index(i, this._width - 1)] = this._current[this.index(i, 1)]
+    }
+    this._current[this.index(0, 0)] = this._current[this.index(this._height - 2, this._width - 2)]
+    this._current[this.index(0, this._width - 1)] = this._current[this.index(this._height - 2, 1)]
+    this._current[this.index(this._height - 1, 0)] = this._current[this.index(1, this._width - 2)]
+    this._current[this.index(this._height - 1, this._width - 1)] = this._current[this.index(1, 1)]
+  }
+
   computeNextState () {
+    this.loopCurrentState()
     let neighbors
-    for (let i = 0; i < this.height; i++) {
-      for (let j = 0; j < this.width; j++) {
-        neighbors = this.cell(i - 1, j - 1) + this.cell(i - 1, j) + this.cell(i - 1, j + 1)
-        neighbors += this.cell(i, j - 1) /* this.cell(i, j) */ + this.cell(i, j + 1)
-        neighbors += this.cell(i + 1, j - 1) + this.cell(i + 1, j) + this.cell(i + 1, j + 1)
-        if (neighbors < 2 || neighbors > 3) {
-          this._next[i * this.width + j] = 0
-        } else if (neighbors === 3) {
-          this._next[i * this.width + j] = 1
+    for (let i = 1; i < this._height - 1; i++) {
+      const iM1 = (i - 1) * this._width
+      const iP1 = (i + 1) * this._width
+      const i_ = i * this._width
+      for (let j = 1; j < this._width - 1; j++) {
+        const jM1 = j - 1
+        const jP1 = j + 1
+        neighbors = this._current[iM1 + jM1]
+        neighbors += this._current[iM1 + j]
+        neighbors += this._current[iM1 + jP1]
+        neighbors += this._current[i_ + jM1]
+        neighbors += this._current[i_ + jP1]
+        neighbors += this._current[iP1 + jM1]
+        neighbors += this._current[iP1 + j]
+        neighbors += this._current[iP1 + jP1]
+        if (neighbors === 3) {
+          this._next[i * this._width + j] = 1
+        } else if (neighbors === 2) {
+          this._next[i * this._width + j] = this._current[i * this._width + j]
         } else {
-          this._next[i * this.width + j] = this._current[i * this.width + j]
+          this._next[i * this._width + j] = 0
         }
       }
     }

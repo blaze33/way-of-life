@@ -11,16 +11,14 @@ char *next;
 
 EMSCRIPTEN_KEEPALIVE
 char *init(int w, int h) {
-    width = w;
-    height = h;
+    width = w + 2;
+    height = h + 2;
     current = malloc(width * height * sizeof(char));
     next = malloc(width * height * sizeof(char));
     return current;
 }
 
 int cell_index(int i, int j) {
-    i = i == -1 ? height - 1 : i == height ? 0 : i;
-    j = j == -1 ? width - 1 : j == width ? 0 : j;
     return i * width + j;
 }
 
@@ -39,14 +37,41 @@ char getNext(int i, int j) {
   return next[cell_index(i, j)];
 }
 
+void loopCurrentState() {
+  for (int j=1; j < width + 1; j++) {
+    current[cell_index(0, j)] = current[cell_index(height - 2, j)];
+    current[cell_index(height - 1, j)] = current[cell_index(1, j)];
+  }
+  for (int i=1; i < height + 1; i++) {
+    current[cell_index(i, 0)] = current[cell_index(i, width - 2)];
+    current[cell_index(i, width - 1)] = current[cell_index(i, 1)];
+  }
+  current[cell_index(0, 0)] = current[cell_index(height - 2, width - 2)];
+  current[cell_index(0, width - 1)] = current[cell_index(height -2, 1)];
+  current[cell_index(height - 1, 0)] = current[cell_index(1, width-2)];
+  current[cell_index(height - 1, width - 1)] = current[cell_index(1, 1)];
+}
+
 EMSCRIPTEN_KEEPALIVE
 void computeNextState () {
+  loopCurrentState();
+
   int neighbors = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      neighbors = cell(i - 1, j - 1) + cell(i - 1, j) + cell(i - 1, j + 1);
-      neighbors += cell(i, j - 1) /* cell(i, j) */ + cell(i, j + 1);
-      neighbors += cell(i + 1, j - 1) + cell(i + 1, j) + cell(i + 1, j + 1);
+  for (int i = 1; i < height -1; i++) {
+    int i_m1 = (i - 1) * width;
+    int i_p1 = (i + 1) * width;
+    int i_ = i * width;
+    for (int j = 1; j < width - 1; j++) {
+      int j_m1 = j - 1;
+      int j_p1 = j + 1;
+      neighbors = current[i_m1 + j_m1];
+      neighbors += current[i_m1 + j];
+      neighbors += current[i_m1 + j_p1];
+      neighbors += current[i_+ j_m1];
+      neighbors += current[i_ + j_p1];
+      neighbors += current[i_p1 + j_m1];
+      neighbors += current[i_p1 + j];
+      neighbors += current[i_p1 + j_p1];
       if (neighbors == 3) {
         next[i * width + j] = 1;
       } else if (neighbors == 2) {
@@ -61,7 +86,6 @@ void computeNextState () {
 
 EMSCRIPTEN_KEEPALIVE
 void set (int i, int j, int value) {
-  printf("%d", cell_index(i, j));
   current[cell_index(i, j)] = value;
 }
 

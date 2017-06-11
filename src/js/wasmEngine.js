@@ -19,7 +19,7 @@ class WasmEngine {
   cellSafe (i, j) {
     // cellSafe should only be called when we know i and j are within
     // the bounds of the game state array.
-    return this.module.HEAP8[this.currentAdress + i * this.width + j]
+    return this.module.HEAP8[this.currentAdress + (i + 1) * (this.width + 2) + j + 1]
     // return this.module.getValue(this.currentAdress + i * this.width + j, 'i8')
   }
 
