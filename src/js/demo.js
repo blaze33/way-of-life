@@ -33,7 +33,7 @@ const gameOfLife = () => {
 
   const width = ~~(canvas.clientWidth / options.pixelsPerCell)
   const height = ~~(canvas.clientHeight / options.pixelsPerCell)
-  const wasmEngine = new WasmEngine(width, height)
+  const wasmEngine = new Engine(width, height)
   const jsEngine = new Engine(width, height)
   var engine
   if (options.useWasm === true) {
