@@ -30,7 +30,9 @@ class MouseEventHandler {
       if (event.selector) {
         target = document.querySelector(event.selector)
       }
-      target.addEventListener(event.eventType, event.callback)
+      if (target) {
+        target.addEventListener(event.eventType, event.callback)
+      }
     })
   }
 
