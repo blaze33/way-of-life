@@ -1,7 +1,7 @@
 'use strict'
 
 import Engine from './engine'
-import WasmEngine from './wasmEngine'
+// import WasmEngine from './wasmEngine'
 import {acorn} from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
@@ -71,7 +71,7 @@ const gameOfLife = () => {
     hideText()
   }
   const switchEngine = event => {
-    if (engine instanceof WasmEngine) {
+    if (engine instanceof Engine) {
       engine = jsEngine
     } else {
       engine = wasmEngine
