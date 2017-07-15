@@ -18,7 +18,7 @@ const defaultOptions = {
   strokeStyle: 'rgba(255,118,5,0.5)',
   fillStyle: 'rgba(222,122,39,0.5)',
   showText: true,
-  useWasm: true
+  useWasm: false
 }
 const urlOptions = queryString.parse(window.location.search)
 if (urlOptions.desiredFPS || urlOptions.pixelsperCell) {
