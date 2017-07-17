@@ -4,4 +4,4 @@ object-assign
 @license MIT
 */
 var r=Object.getOwnPropertySymbols,s=Object.prototype.hasOwnProperty,o=Object.prototype.propertyIsEnumerable;e.exports=function(){try{if(!Object.assign)return!1;var e=new String("abc");if(e[5]="de","5"===Object.getOwnPropertyNames(e)[0])return!1;for(var t={},n=0;n<10;n++)t["_"+String.fromCharCode(n)]=n;if("0123456789"!==Object.getOwnPropertyNames(t).map(function(e){return t[e]}).join(""))return!1;var i={};return"abcdefghijklmnopqrst".split("").forEach(function(e){i[e]=e}),"abcdefghijklmnopqrst"===Object.keys(Object.assign({},i)).join("")}catch(e){return!1}}()?Object.assign:function(e,t){for(var n,c,l=i(e),u=1;u<arguments.length;u++){n=Object(arguments[u]);for(var a in n)s.call(n,a)&&(l[a]=n[a]);if(r){c=r(n);for(var h=0;h<c.length;h++)o.call(n,c[h])&&(l[c[h]]=n[c[h]])}}return l}}]);
-//# sourceMappingURL=bundle.js.map?d6387d36
+//# sourceMappingURL=lab-bundle.js.map?d53862f3

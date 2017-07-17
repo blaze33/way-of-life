@@ -1,2 +1,2 @@
 !function(t){function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}var n={};e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:r})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},e.p="https://lab.openbloc.fr/way-of-life/",e(e.s=8)}({8:function(t,e){}});
-//# sourceMappingURL=styles.js.map?21eafaf0
+//# sourceMappingURL=lab-styles.js.map?a5c6a153

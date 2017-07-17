@@ -11,8 +11,8 @@ module.exports = function (env) {
     disable: env !== 'production',
     allChunks: true
   })
-  const outputPath = 'docs'
-  const publicPath = env === 'production' ? 'https://lab.openbloc.fr/way-of-life/' : ''
+  const outputPath = '../docs'
+  const publicPath = ''
 
   return {
     entry: {
@@ -22,7 +22,7 @@ module.exports = function (env) {
     output: {
       path: path.resolve(__dirname, outputPath),
       publicPath: publicPath,
-      filename: `js/[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
+      filename: `js/demo-[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
     },
     resolve: {
       extensions: ['*', '.js', '.jsx', '.wasm']
