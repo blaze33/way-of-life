@@ -1,24 +1,24 @@
-// surface imports and customization
-// Colors
-@import "~surface/src/scss/_imports/_colors.scss";
-$primary: #e67e22;
-$secondary: $asbestos;
-$accent: #ff5722;
+// // surface imports and customization
+// // Colors
+// @import "~surface/src/scss/_imports/_colors.scss";
+// $primary: #e67e22;
+// $secondary: $asbestos;
+// $accent: #ff5722;
 
-@import "~surface/src/scss/buttons.scss";
-@import "~surface/src/scss/form.scss";
+// @import "~surface/src/scss/buttons.scss";
+// @import "~surface/src/scss/form.scss";
 
-@import 'github-corner.scss';
+// @import 'github-corner.scss';
 
-::-moz-selection {
-  background: #fff !important;
-  color: #444 !important;
-}
+// ::-moz-selection {
+//   background: #fff !important;
+//   color: #444 !important;
+// }
 
-::selection {
-  background: rgba(255, 255, 255, 0) !important;
-  color: #444 !important;
-}
+// ::selection {
+//   background: rgba(255, 255, 255, 0) !important;
+//   color: #444 !important;
+// }
 
 #universe {
     border: 0;
@@ -32,77 +32,77 @@ $accent: #ff5722;
     box-shadow: 0 0 2em #bbb;
 }
 
-.APL {
-    background: rgba(243, 243, 243, 0.5);
-    font-family: "APL385", "APL385 Unicode", "APLX Upright", "Courier APL2 Unicode", "SImPL", "SiMPL medium", monospace;
-    text-align: center;
-    padding: 0.5em 0;
-    border-radius: 0.5em;
-    // -webkit-text-fill-color: #444;
-    a {
-        text-decoration: none;
-    }
-}
+// .APL {
+//     background: rgba(243, 243, 243, 0.5);
+//     font-family: "APL385", "APL385 Unicode", "APLX Upright", "Courier APL2 Unicode", "SImPL", "SiMPL medium", monospace;
+//     text-align: center;
+//     padding: 0.5em 0;
+//     border-radius: 0.5em;
+//     // -webkit-text-fill-color: #444;
+//     a {
+//         text-decoration: none;
+//     }
+// }
 
-.controls {
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+// .controls {
+//     text-align: center;
+//     position: fixed;
+//     bottom: 0;
+//     margin-left: auto;
+//     margin-right: auto;
+//     left: 0;
+//     right: 0;
 
-    button {
-        margin: 0.5rem 1rem;
-    }
-}
+//     button {
+//         margin: 0.5rem 1rem;
+//     }
+// }
 
-.hidden {
-    display: none;
-}
+// .hidden {
+//     display: none;
+// }
 
-.github-link {
-    position: fixed;
-    top: 24px;
-    left: 125px;
-    font-size: 1rem;
-    a {
-        text-decoration: none;
-    }
-    .octicon {
-        height: 20px;
-        vertical-align: sub;
-    }
-}
+// .github-link {
+//     position: fixed;
+//     top: 24px;
+//     left: 125px;
+//     font-size: 1rem;
+//     a {
+//         text-decoration: none;
+//     }
+//     .octicon {
+//         height: 20px;
+//         vertical-align: sub;
+//     }
+// }
 
-#fps-info {
-    min-width: 10rem;
-    position: fixed;
-    top: 26px;
-    left: 0;
-    right: 80px;
-    text-align: right;
-}
+// #fps-info {
+//     min-width: 10rem;
+//     position: fixed;
+//     top: 26px;
+//     left: 0;
+//     right: 80px;
+//     text-align: right;
+// }
 
-.text-content {
-    position: fixed;
-    top: 55px;
-    bottom: 115px;
-    left: 0;
-    right: 0;
-    max-width: 45rem;
-    overflow: scroll;
-    overflow-x: hidden;
-    margin: auto;
+// .text-content {
+//     position: fixed;
+//     top: 55px;
+//     bottom: 115px;
+//     left: 0;
+//     right: 0;
+//     max-width: 45rem;
+//     overflow: scroll;
+//     overflow-x: hidden;
+//     margin: auto;
 
-    // nice in FF, broken in chrome
-    // -webkit-text-fill-color: transparent;
-    // background: -webkit-linear-gradient(transparent, #444 5%, #444 95%, transparent);
-    // background: -o-linear-gradient(transparent, #444 5%, #444 95%, transparent);
-    // -webkit-background-clip: text;
-}
+//     // nice in FF, broken in chrome
+//     // -webkit-text-fill-color: transparent;
+//     // background: -webkit-linear-gradient(transparent, #444 5%, #444 95%, transparent);
+//     // background: -o-linear-gradient(transparent, #444 5%, #444 95%, transparent);
+//     // -webkit-background-clip: text;
+// }
 
-small {
-    font-size: 0.9rem;
-}
+// small {
+//     font-size: 0.9rem;
+// }
