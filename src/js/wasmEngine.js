@@ -6,7 +6,7 @@ class WasmEngine {
     this.wasm = true
     this.width = width
     this.height = height
-    this.module = Module({wasmBinaryFile: 'https://lab.openbloc.fr/way-of-life/wasm/engine.wasm'})
+    this.module = Module({wasmBinaryFile: 'wasm/engine.wasm'})
     window.module = this.module
   }
 

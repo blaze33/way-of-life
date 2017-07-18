@@ -1,7 +1,7 @@
 'use strict'
 
 import Engine from './engine'
-// import WasmEngine from './wasmEngine'
+import WasmEngine from './wasmEngine'
 import {acorn} from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
@@ -18,7 +18,7 @@ const defaultOptions = {
   strokeStyle: 'rgba(255,118,5,0.5)',
   fillStyle: 'rgba(222,122,39,0.5)',
   showText: true,
-  useWasm: false
+  useWasm: true
 }
 const urlOptions = queryString.parse(window.location.search)
 if (urlOptions.desiredFPS || urlOptions.pixelsperCell) {
@@ -33,7 +33,7 @@ const gameOfLife = () => {
 
   const width = ~~(canvas.clientWidth / options.pixelsPerCell)
   const height = ~~(canvas.clientHeight / options.pixelsPerCell)
-  const wasmEngine = new Engine(width, height)
+  const wasmEngine = new WasmEngine(width, height)
   const jsEngine = new Engine(width, height)
   var engine
   if (options.useWasm === true) {
@@ -71,7 +71,7 @@ const gameOfLife = () => {
     hideText()
   }
   const switchEngine = event => {
-    if (engine instanceof Engine) {
+    if (engine instanceof WasmEngine) {
       engine = jsEngine
     } else {
       engine = wasmEngine
