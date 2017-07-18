@@ -16,13 +16,13 @@ module.exports = function (env) {
 
   return {
     entry: {
-      bundle: './src/js/demo.js',
-      styles: './src/styles/main.scss'
+      bundle: './src/js/embed.js',
+      styles: './src/styles/embed.scss'
     },
     output: {
       path: path.resolve(__dirname, outputPath),
       publicPath: publicPath,
-      filename: `js/lab-[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
+      filename: `js/lab[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
     },
     resolve: {
       extensions: ['*', '.js', '.jsx', '.wasm']
@@ -64,7 +64,7 @@ module.exports = function (env) {
     plugins: [
       extractSass,
       new HtmlWebpackPlugin({
-        template: 'src/index.html'
+        template: 'src/embed.html'
       }),
       new PurifyCSSPlugin({
         paths: glob.sync(path.join(__dirname, 'src/*.html'))

@@ -27,13 +27,14 @@ $accent: #ff5722;
 
 #universe {
     border: 0;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 400px;
     z-index: -1;
     cursor: crosshair;
+    border: 1px grey solid;
+    border-radius: 4px;
+    box-shadow: 0 0 2em #bbb;
 }
 
 .APL {
