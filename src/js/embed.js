@@ -8,7 +8,7 @@ import MouseEventHandler from './events'
 import queryString from 'query-string'
 
 // styles
-import css from '../styles/embed.scss';
+import '../styles/embed.scss'
 
 const defaultOptions = {
   canvasSelector: '#universe',
