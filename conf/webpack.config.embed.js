@@ -22,7 +22,7 @@ module.exports = function (env) {
     output: {
       path: path.resolve(__dirname, outputPath),
       publicPath: publicPath,
-      filename: `js/lab[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
+      filename: `js/lab-[name].js${env === 'production' ? '?[chunkhash:8]' : ''}`
     },
     resolve: {
       extensions: ['*', '.js', '.jsx', '.wasm']
