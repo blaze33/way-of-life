@@ -1,6 +1,3 @@
-// normalize.css
-@import "~normalize.css";
-
 // surface imports and customization
 // Colors
 @import "~surface/src/scss/_imports/_colors.scss";
@@ -10,8 +7,6 @@ $accent: #ff5722;
 
 @import "~surface/src/scss/buttons.scss";
 @import "~surface/src/scss/form.scss";
-
-@import 'screen.css';
 
 @import 'github-corner.scss';
 
