@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = function (env) {
   const extractSass = new ExtractTextPlugin({
     filename: 'css/[name].css?[contenthash:8]',
-    disable: env !== 'production',
+    disable: true,
     allChunks: true
   })
   const outputPath = '../docs'
@@ -64,7 +64,8 @@ module.exports = function (env) {
     plugins: [
       extractSass,
       new HtmlWebpackPlugin({
-        template: 'src/embed.html'
+        template: 'src/embed.html',
+        filename: 'embed.html'
       }),
       new PurifyCSSPlugin({
         paths: glob.sync(path.join(__dirname, 'src/*.html'))
