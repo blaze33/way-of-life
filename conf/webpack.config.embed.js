@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = function (env) {
   const extractSass = new ExtractTextPlugin({
     filename: 'css/lab-[name].css?[contenthash:8]',
-    disable: env != 'production',
+    disable: true,
     allChunks: true
   })
   const outputPath = '../docs'
@@ -16,8 +16,7 @@ module.exports = function (env) {
 
   return {
     entry: {
-      bundle: './src/js/embed.js',
-      styles: './src/styles/embed.scss'
+      bundle: './src/js/embed.js'
     },
     output: {
       path: path.resolve(__dirname, outputPath),
