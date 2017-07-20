@@ -1,6 +1,6 @@
 {
   "name": "way-of-life",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Conway's game of life",
   "repository": {
     "type": "git",
@@ -12,8 +12,9 @@
   },
   "main": "src/js/index.js",
   "scripts": {
-    "build": "webpack --config conf/webpack.config.demo.js -p --env production",
+    "demo": "webpack --config conf/webpack.config.demo.js -p --env production",
     "lab": "webpack --config conf/webpack.config.embed.js -p --env production",
+    "build": "npm run demo && npm run lab",
     "watch": "webpack --config conf/webpack.config.demo.js --watch",
     "serve": "webpack-dev-server --config conf/webpack.config.demo.js --open",
     "serveLab": "webpack-dev-server --config conf/webpack.config.embed.js --open",
