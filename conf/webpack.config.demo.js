@@ -8,7 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 module.exports = function (env) {
   const extractSass = new ExtractTextPlugin({
     filename: 'css/[name].css?[contenthash:8]',
-    disable: env !== 'production',
+    disable: true,
     allChunks: true
   })
   const outputPath = '../docs'
