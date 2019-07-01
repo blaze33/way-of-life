@@ -1,6 +1,6 @@
 'use strict'
 
-import {erase, cross} from './patterns'
+import { erase, cross } from './patterns'
 
 class MouseEventHandler {
   constructor (canvas, engine, renderer) {
@@ -11,15 +11,15 @@ class MouseEventHandler {
     this.listeners = []
 
     this.addEvents([
-      {eventType: 'mousedown', callback: this.mouseIsDown.bind(this)},
-      {eventType: 'mouseup', callback: this.mouseIsUp.bind(this)},
-      {eventType: 'mousemove', callback: this.addCells.bind(this)},
-      {eventType: 'touchmove',
+      { eventType: 'mousedown', callback: this.mouseIsDown.bind(this) },
+      { eventType: 'mouseup', callback: this.mouseIsUp.bind(this) },
+      { eventType: 'mousemove', callback: this.addCells.bind(this) },
+      { eventType: 'touchmove',
         callback: event => {
           for (let i = 0; i < event.touches.length; i++) {
             this.addCells(event.touches[i], true)
           }
-        }}
+        } }
     ])
   }
 
@@ -67,4 +67,4 @@ class MouseEventHandler {
   }
 }
 
-export {MouseEventHandler as default}
+export { MouseEventHandler as default }

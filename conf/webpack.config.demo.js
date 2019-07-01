@@ -1,23 +1,16 @@
 const path = require('path')
 const glob = require('glob')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const PurifyCSSPlugin = require('purifycss-webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = function (env) {
-  const extractSass = new ExtractTextPlugin({
-    filename: 'css/[name].css?[contenthash:8]',
-    disable: true,
-    allChunks: true
-  })
   const outputPath = '../docs'
   const publicPath = ''
 
   return {
     entry: {
-      bundle: './src/js/demo.js',
-      styles: './src/styles/main.scss'
+      bundle: './src/js/demo.js'
     },
     output: {
       path: path.resolve(__dirname, outputPath),
@@ -28,7 +21,7 @@ module.exports = function (env) {
       extensions: ['*', '.js', '.jsx', '.wasm']
     },
     module: {
-      loaders: [
+      rules: [
         {
           test: /\.(js|jsx)$/,
           use: 'babel-loader'
@@ -37,11 +30,11 @@ module.exports = function (env) {
           loader: 'html-loader?' + JSON.stringify({ pretty: true })
         }, {
           test: /\.scss$/,
-          use: extractSass.extract({
-            use: ['css-loader?sourceMap', 'sass-loader?sourceMap'],
-            fallback: 'style-loader',
-            publicPath: '../'
-          })
+          use: [
+            'style-loader?sourceMap',
+            'css-loader?sourceMap',
+            'sass-loader?sourceMap'
+          ]
         }, {
           test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
           loader: 'url-loader?limit=10000&mimetype=application/font-woff' +
@@ -62,7 +55,6 @@ module.exports = function (env) {
       ]
     },
     plugins: [
-      extractSass,
       new HtmlWebpackPlugin({
         template: 'src/index.html'
       }),
@@ -71,7 +63,7 @@ module.exports = function (env) {
       }),
       new CopyWebpackPlugin([{
         from: 'src/js/wasm/*.wasm',
-        to: 'wasm/[name].wasm'
+        to: 'js/[name].wasm'
       }])
     ],
     devServer: {
@@ -79,6 +71,6 @@ module.exports = function (env) {
       disableHostCheck: true
     },
     devtool: env === 'production' ? 'source-map' : 'source-map',
-    node: {fs: 'empty'}
+    node: { fs: 'empty' }
   }
 }

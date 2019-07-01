@@ -81,4 +81,4 @@ class Renderer {
   }
 }
 
-export {Renderer as default}
+export { Renderer as default }

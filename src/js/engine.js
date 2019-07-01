@@ -7,7 +7,7 @@ class Engine {
     this._width = width + 2
     this.height = height
     this._height = height + 2
-    this.module = {calledRun: true}
+    this.module = { calledRun: true }
   }
 
   init () {
@@ -15,7 +15,7 @@ class Engine {
     this._current = new Uint8Array(buffer)
     const nextBuffer = new ArrayBuffer(this._width * this._height)
     this._next = new Uint8Array(nextBuffer)
-    this.module = {calledRun: true}
+    this.module = { calledRun: true }
   }
 
   index (i, j) {
@@ -90,4 +90,4 @@ class Engine {
   }
 }
 
-export {Engine as default}
+export { Engine as default }

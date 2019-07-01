@@ -1,11 +1,11 @@
-'use strict'
-
 import Engine from './engine'
 import WasmEngine from './wasmEngine'
-import {acorn} from './patterns'
+import { acorn } from './patterns'
 import Renderer from './renderer'
 import MouseEventHandler from './events'
 import queryString from 'query-string'
+
+import '../styles/main.scss'
 
 const defaultOptions = {
   canvasSelector: '#universe',
@@ -102,15 +102,15 @@ const gameOfLife = () => {
     if (engine.module.calledRun !== true) {
       window.setTimeout(checkFlag.bind(this), 100)
     } else {
-        // allocate the engines state memory
+      // allocate the engines state memory
       wasmEngine.init()
       jsEngine.init()
-        // initialize some cells at the center
+      // initialize some cells at the center
       acorn(wasmEngine, ~~(height / 2), ~~(width / 2))
       acorn(wasmEngine, 0, 0)
       acorn(jsEngine, ~~(height / 2), ~~(width / 2))
       acorn(jsEngine, 0, 0)
-        // start
+      // start
       renderer.start()
     }
   }

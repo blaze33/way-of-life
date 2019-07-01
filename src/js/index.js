@@ -2,7 +2,7 @@
 
 import Engine from './engine'
 import Renderer from './renderer'
-import {acorn, cross, erase} from './patterns'
+import { acorn, cross, erase } from './patterns'
 import MouseEventHandler from './events'
 
 export {

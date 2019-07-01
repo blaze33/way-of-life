@@ -6,14 +6,14 @@ class WasmEngine {
     this.wasm = true
     this.width = width
     this.height = height
-    this.module = Module({wasmBinaryFile: 'wasm/engine.wasm'})
+    this.module = Module({ wasmBinaryFile: 'wasm/engine.wasm' })
     window.module = this.module
   }
 
   init () {
     // _init returns a pointer to the array of the current game state
     // we'll save it to have a fast access to the state in cellSafe
-    this.currentAdress = this.module.asm._init(this.width, this.height)
+    this.currentAdress = this.module._init(this.width, this.height)
   }
 
   cellSafe (i, j) {
@@ -24,12 +24,12 @@ class WasmEngine {
   }
 
   computeNextState () {
-    this.module.asm._computeNextState()
+    this.module._computeNextState()
   }
 
   set (i, j, value = 1) {
-    this.module.asm._set(i, j, value)
+    this.module._set(i, j, value)
   }
 }
 
-export {WasmEngine as default}
+export { WasmEngine as default }
