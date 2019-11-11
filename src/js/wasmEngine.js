@@ -6,7 +6,9 @@ class WasmEngine {
     this.wasm = true
     this.width = width
     this.height = height
-    this.module = Module({ wasmBinaryFile: 'wasm/engine.wasm' })
+    this.module = Module({ wasmBinaryFile: 'wasm/engine.wasm' }).then(
+      Module => { Module.calledRun = true }
+    )
     window.module = this.module
   }
 
